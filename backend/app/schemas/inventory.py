@@ -1,7 +1,7 @@
 """Inventory and Stock Ledger Pydantic Schemas."""
 
 from datetime import date, datetime
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 from backend.app.models.inventory import InventoryStatus, ItemUnit
@@ -160,3 +160,11 @@ class StockTransactionResponse(BaseModel):
     created_at: datetime
 
     model_config = {"from_attributes": True}
+
+
+class BarcodeLookupResult(BaseModel):
+    id: str
+    item: InventoryItemResponse
+    scanned_code: str
+    code_type: str = "RAW_CODE"  # UPC_OR_EAN, SKU, STRUCTURED_QR_JSON, RAW_CODE
+    embedded_data: Optional[Dict[str, Any]] = None  # Populated only if QR code explicitly encodes structured metadata

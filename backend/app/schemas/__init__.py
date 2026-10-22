@@ -9,6 +9,7 @@ from backend.app.schemas.common import (
     SuccessEnvelope,
 )
 from backend.app.schemas.inventory import (
+    BarcodeLookupResult,
     CategorySummary,
     InventoryItemCreate,
     InventoryItemResponse,
@@ -20,6 +21,15 @@ from backend.app.schemas.csv_import import (
     CsvImportResponse,
     CsvImportRowErrorSchema,
     CsvImportSummary,
+)
+from backend.app.schemas.pos import (
+    PosIntegrationCreate,
+    PosIntegrationResponse,
+    PosSyncRequest,
+    PosSyncResponse,
+    PosWebhookLineItem,
+    PosWebhookPayload,
+    PosWebhookResponse,
 )
 from backend.app.schemas.expiry import (
     AcknowledgeAlertRequest,
@@ -58,4 +68,12 @@ __all__ = [
     "TenantAlertConfigBase",
     "TenantAlertConfigSchema",
     "TenantAlertConfigUpdate",
+    "BarcodeLookupResult",
+    "PosIntegrationCreate",
+    "PosIntegrationResponse",
+    "PosSyncRequest",
+    "PosSyncResponse",
+    "PosWebhookLineItem",
+    "PosWebhookPayload",
+    "PosWebhookResponse",
 ]

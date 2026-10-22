@@ -11,6 +11,7 @@ from backend.app.db.session import get_db
 from backend.app.models.user import UserRole
 from backend.app.schemas.common import PaginatedResponse, PaginationMeta, SuccessEnvelope
 from backend.app.schemas.inventory import (
+    BarcodeLookupResult,
     CategorySummary,
     InventoryItemCreate,
     InventoryItemResponse,
@@ -160,22 +161,31 @@ def create_item(
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail=str(e))
 
 
-@router.get("/lookup", response_model=SuccessEnvelope[InventoryItemResponse])
+@router.get("/lookup", response_model=SuccessEnvelope[BarcodeLookupResult])
 def lookup_item_by_barcode(
     code: str = Query(..., min_length=1, description="Scanned barcode or QR code"),
     context: TenantContext = Depends(get_current_tenant_context),
     db: Session = Depends(get_db),
 ):
     """
-    Lookup inventory item by barcode strictly within tenant inventory.
+    Lookup inventory item by barcode, SKU, or structured QR code strictly within tenant inventory.
     """
-    item = lookup_by_barcode(db=db, tenant_id=context.tenant_id, barcode=code)
+    item, code_type, embedded_data = lookup_by_barcode(db=db, tenant_id=context.tenant_id, barcode=code)
     if not item:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"No item with barcode '{code}' found in your inventory",
+            detail=f"No item matching code '{code}' found in your inventory",
         )
-    return SuccessEnvelope(data=serialize_item(item))
+    serialized_item = serialize_item(item)
+    return SuccessEnvelope(
+        data=BarcodeLookupResult(
+            id=item.id,
+            item=serialized_item,
+            scanned_code=code,
+            code_type=code_type,
+            embedded_data=embedded_data,
+        )
+    )
 
 
 @router.get("/{id}", response_model=SuccessEnvelope[InventoryItemResponse])

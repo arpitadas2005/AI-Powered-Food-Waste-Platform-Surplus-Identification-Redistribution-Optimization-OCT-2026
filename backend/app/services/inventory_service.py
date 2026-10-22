@@ -1,7 +1,8 @@
 """Core Inventory Business Logic & Stock Ledger Service."""
 
+import json
 from datetime import date, datetime, timezone
-from typing import List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session, joinedload
 
@@ -373,17 +374,65 @@ def lookup_by_barcode(
     db: Session,
     tenant_id: str,
     barcode: str,
-) -> Optional[InventoryItem]:
-    """Fast lookup by barcode strictly within tenant boundary."""
-    return db.execute(
-        select(InventoryItem)
-        .options(joinedload(InventoryItem.category))
-        .where(
-            InventoryItem.tenant_id == tenant_id,
-            InventoryItem.barcode == barcode.strip(),
-            InventoryItem.is_active == True,
-        )
-    ).scalar_one_or_none()
+) -> Tuple[Optional[InventoryItem], str, Optional[Dict[str, Any]]]:
+    """
+    Fast lookup by barcode or SKU strictly within tenant boundary.
+    Supports standard UPC/EAN, internal SKU barcodes, and structured JSON QR codes.
+    Returns:
+        (matched_item, code_type, optional_embedded_data)
+    """
+    raw_code = barcode.strip()
+    embedded_data: Optional[Dict[str, Any]] = None
+    code_type = "RAW_CODE"
+    lookup_keys = [raw_code]
+
+    # Check for structured JSON QR code
+    if (raw_code.startswith("{") and raw_code.endswith("}")) or (raw_code.startswith("[") and raw_code.endswith("]")):
+        try:
+            parsed = json.loads(raw_code)
+            if isinstance(parsed, dict):
+                embedded_data = parsed
+                code_type = "STRUCTURED_QR_JSON"
+                if "barcode" in parsed:
+                    lookup_keys.insert(0, str(parsed["barcode"]).strip())
+                if "sku" in parsed:
+                    lookup_keys.append(str(parsed["sku"]).strip())
+        except Exception:
+            pass
+
+    # 1. Match by barcode
+    for key in lookup_keys:
+        item = db.execute(
+            select(InventoryItem)
+            .options(joinedload(InventoryItem.category))
+            .where(
+                InventoryItem.tenant_id == tenant_id,
+                InventoryItem.barcode == key,
+                InventoryItem.is_active == True,
+            )
+        ).scalar_one_or_none()
+        if item:
+            if code_type == "RAW_CODE":
+                code_type = "UPC_OR_EAN" if key.isdigit() and len(key) in {8, 12, 13, 14} else "BARCODE"
+            return item, code_type, embedded_data
+
+    # 2. Fallback match by SKU
+    for key in lookup_keys:
+        item = db.execute(
+            select(InventoryItem)
+            .options(joinedload(InventoryItem.category))
+            .where(
+                InventoryItem.tenant_id == tenant_id,
+                InventoryItem.sku == key,
+                InventoryItem.is_active == True,
+            )
+        ).scalar_one_or_none()
+        if item:
+            if code_type == "RAW_CODE":
+                code_type = "SKU"
+            return item, code_type, embedded_data
+
+    return None, code_type, embedded_data
 
 
 def get_item_transactions(

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Waste Management - Barcode & QR Scanner</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --danger: #dc2626;
+      --success: #16a34a;
+      --warning: #d97706;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 16px; display: flex; justify-content: center; }
+    .container { width: 100%; max-width: 480px; background: var(--card-bg); border-radius: 16px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); padding: 20px; border: 1px solid var(--border); }
+    h1 { font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .video-viewport { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    video { width: 100%; height: 100%; object-fit: cover; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 16px; font-size: 0.875rem; font-weight: 600; border-radius: 8px; border: none; cursor: pointer; transition: all 0.2s; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-secondary { background: var(--border); color: var(--text); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .alert { padding: 12px; border-radius: 8px; font-size: 0.8125rem; margin-bottom: 12px; }
+    .alert-warning { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .alert-success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .alert-error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+    .input-group { display: flex; gap: 8px; margin-top: 8px; }
+    input[type="text"], input[type="number"], select { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.875rem; outline: none; }
+    input:focus, select:focus { border-color: var(--primary); ring: 2px solid var(--primary); }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 50; }
+    .modal { background: var(--card-bg); border-radius: 16px; width: 100%; max-width: 440px; padding: 20px; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2); }
+    .item-card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-size: 0.8125rem; line-height: 1.6; margin: 12px 0; }
+    .item-card-row { display: flex; justify-content: space-between; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><span>📷</span> Mobile Barcode Scanner</h1>
+    
+    <div id="statusAlert" class="alert alert-warning" style="display: none;"></div>
+    <div id="successAlert" class="alert alert-success" style="display: none;"></div>
+
+    <div class="video-viewport">
+      <video id="scannerVideo" playsinline></video>
+      <div id="cameraPlaceholder" style="text-align: center; color: #94a3b8; padding: 16px;">
+        <p style="margin-bottom: 12px; font-size: 0.875rem;">Live camera scanning ready</p>
+        <button class="btn btn-primary" onclick="startCamera()">Start Camera</button>
+      </div>
+      <button id="stopCameraBtn" class="btn btn-danger" style="position: absolute; top: 8px; right: 8px; display: none; padding: 6px 10px; font-size: 0.75rem;" onclick="stopCamera()">Stop</button>
+    </div>
+
+    <div style="border-top: 1px solid var(--border); padding-top: 16px;">
+      <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Manual Barcode / SKU Fallback</label>
+      <div class="input-group">
+        <input type="text" id="manualCodeInput" placeholder="Scan or type code (e.g. MILK-001)" onkeydown="if(event.key==='Enter') lookupCode(this.value)">
+        <button class="btn btn-primary" onclick="lookupCode(document.getElementById('manualCodeInput').value)">Lookup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div id="confirmationModal" class="modal-overlay">
+    <div class="modal">
+      <h2 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 8px;">Confirm Stock Adjustment</h2>
+      <div id="resolvedItemSummary" class="item-card"></div>
+      
+      <form id="adjustmentForm" onsubmit="submitStockAdjustment(event)">
+        <div style="margin-bottom: 10px;">
+          <label style="display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 4px;">Adjustment Type</label>
+          <select id="adjustmentType">
+            <option value="RESTOCK">Restock / Inbound (+)</option>
+            <option value="POS_SALE">Point of Sale / Sale (-)</option>
+            <option value="MANUAL_ADJUSTMENT" selected>Manual Adjustment (+/-)</option>
+            <option value="SPOILAGE_DISCARD">Spoilage / Expired Discard (-)</option>
+            <option value="DONATION_HOLD">Donation Hold (-)</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom: 10px;">
+          <label style="display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 4px;">Quantity Delta</label>
+          <input type="number" step="0.01" id="quantityDelta" value="1.0" required>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 4px;">Audit Reason</label>
+          <input type="text" id="auditReason" value="Mobile barcode scan verification" required>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeModal()">Cancel</button>
+          <button type="submit" id="submitBtn" class="btn btn-primary" style="flex: 1;">Confirm Adjustment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let activeStream = null;
+    let resolvedItem = null;
+    let lastScan = { code: '', timestamp: 0 };
+
+    async function startCamera() {
+      const statusEl = document.getElementById('statusAlert');
+      statusEl.style.display = 'none';
+
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        statusEl.className = 'alert alert-warning';
+        statusEl.textContent = 'Camera API not supported in this browser. Please use manual entry below.';
+        statusEl.style.display = 'block';
+        return;
+      }
+
+      try {
+        activeStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment', width: { ideal: 1280 } }
+        });
+        const video = document.getElementById('scannerVideo');
+        video.srcObject = activeStream;
+        await video.play();
+        document.getElementById('cameraPlaceholder').style.display = 'none';
+        document.getElementById('stopCameraBtn').style.display = 'block';
+      } catch (err) {
+        statusEl.className = 'alert alert-warning';
+        if (err.name === 'NotAllowedError') {
+          statusEl.textContent = 'Camera permission denied. Please allow camera permissions or use manual entry.';
+        } else {
+          statusEl.textContent = 'Camera error: ' + err.message;
+        }
+        statusEl.style.display = 'block';
+      }
+    }
+
+    function stopCamera() {
+      if (activeStream) {
+        activeStream.getTracks().forEach(t => t.stop());
+        activeStream = null;
+      }
+      document.getElementById('scannerVideo').srcObject = null;
+      document.getElementById('cameraPlaceholder').style.display = 'block';
+      document.getElementById('stopCameraBtn').style.display = 'none';
+    }
+
+    async function lookupCode(code) {
+      const trimmed = code.trim();
+      if (!trimmed) return;
+
+      // 2.0s Debounce cooldown
+      const now = Date.now();
+      if (lastScan.code === trimmed && (now - lastScan.timestamp) < 2000) {
+        return;
+      }
+      lastScan = { code: trimmed, timestamp: now };
+
+      const statusEl = document.getElementById('statusAlert');
+      statusEl.style.display = 'none';
+
+      try {
+        const token = localStorage.getItem('auth_token') || 'test-token';
+        const res = await fetch(`/api/v1/inventory/lookup?code=${encodeURIComponent(trimmed)}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (!res.ok) {
+          throw new Error(res.status === 404 ? `No item found for barcode: "${trimmed}"` : `Lookup failed (${res.status})`);
+        }
+
+        const body = await res.json();
+        resolvedItem = body.data;
+        showModal(resolvedItem);
+      } catch (err) {
+        statusEl.className = 'alert alert-error';
+        statusEl.textContent = err.message;
+        statusEl.style.display = 'block';
+      }
+    }
+
+    function showModal(data) {
+      const summary = document.getElementById('resolvedItemSummary');
+      const item = data.item;
+      summary.innerHTML = `
+        <div class="item-card-row"><strong>Name:</strong> <span>${item.name}</span></div>
+        <div class="item-card-row"><strong>SKU:</strong> <span>${item.sku || 'N/A'}</span></div>
+        <div class="item-card-row"><strong>Barcode:</strong> <span>${item.barcode || data.scanned_code}</span></div>
+        <div class="item-card-row"><strong>Current Stock:</strong> <span style="font-weight: 700; color: #2563eb;">${item.current_quantity} ${item.unit}</span></div>
+        <div class="item-card-row"><strong>Expiry Date:</strong> <span>${item.expiry_date}</span></div>
+      `;
+      document.getElementById('confirmationModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('confirmationModal').style.display = 'none';
+      resolvedItem = null;
+    }
+
+    async function submitStockAdjustment(e) {
+      e.preventDefault();
+      if (!resolvedItem) return;
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Saving...';
+
+      const token = localStorage.getItem('auth_token') || 'test-token';
+      const delta = parseFloat(document.getElementById('quantityDelta').value);
+      const adjType = document.getElementById('adjustmentType').value;
+      const reason = document.getElementById('auditReason').value;
+      const idempotencyKey = `scan_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+
+      try {
+        const res = await fetch(`/api/v1/inventory/${resolvedItem.item.id}/adjust`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            quantity_delta: delta,
+            adjustment_type: adjType,
+            reason: reason,
+            reference_type: 'BARCODE_SCAN',
+            reference_id: resolvedItem.scanned_code,
+            idempotency_key: idempotencyKey
+          })
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.detail || 'Adjustment failed');
+        }
+
+        const body = await res.json();
+        const successEl = document.getElementById('successAlert');
+        successEl.textContent = `Stock updated! ${body.data.item.name} is now ${body.data.item.current_quantity} ${body.data.item.unit}`;
+        successEl.style.display = 'block';
+        closeModal();
+      } catch (err) {
+        alert('Adjustment error: ' + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Confirm Adjustment';
+      }
+    }
+  </script>
+</body>
+</html>
