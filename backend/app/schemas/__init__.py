@@ -16,6 +16,11 @@ from backend.app.schemas.inventory import (
     StockAdjustmentRequest,
     StockTransactionResponse,
 )
+from backend.app.schemas.csv_import import (
+    CsvImportResponse,
+    CsvImportRowErrorSchema,
+    CsvImportSummary,
+)
 
 __all__ = [
     "ErrorBody",
@@ -30,4 +35,7 @@ __all__ = [
     "InventoryItemUpdate",
     "StockAdjustmentRequest",
     "StockTransactionResponse",
+    "CsvImportResponse",
+    "CsvImportRowErrorSchema",
+    "CsvImportSummary",
 ]
