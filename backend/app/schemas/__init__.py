@@ -21,6 +21,17 @@ from backend.app.schemas.csv_import import (
     CsvImportRowErrorSchema,
     CsvImportSummary,
 )
+from backend.app.schemas.expiry import (
+    AcknowledgeAlertRequest,
+    ExpiryAlertHistoryResponse,
+    ExpiryAlertItemSummary,
+    ExpiryEvaluationResponse,
+    ExpiryEvaluationSummary,
+    ExpirySchedulerDiagnostics,
+    TenantAlertConfigBase,
+    TenantAlertConfigSchema,
+    TenantAlertConfigUpdate,
+)
 
 __all__ = [
     "ErrorBody",
@@ -38,4 +49,13 @@ __all__ = [
     "CsvImportResponse",
     "CsvImportRowErrorSchema",
     "CsvImportSummary",
+    "AcknowledgeAlertRequest",
+    "ExpiryAlertHistoryResponse",
+    "ExpiryAlertItemSummary",
+    "ExpiryEvaluationResponse",
+    "ExpiryEvaluationSummary",
+    "ExpirySchedulerDiagnostics",
+    "TenantAlertConfigBase",
+    "TenantAlertConfigSchema",
+    "TenantAlertConfigUpdate",
 ]
