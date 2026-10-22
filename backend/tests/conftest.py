@@ -4,25 +4,27 @@ from datetime import date, datetime, timedelta, timezone
 from typing import Generator
 import pytest
 from sqlalchemy import create_engine, event
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.orm import Session
+from sqlalchemy.pool import StaticPool
+from starlette.testclient import TestClient
 
+from backend.app.core.security import create_access_token, get_password_hash
 from backend.app.db.base import Base
 from backend.app.db.seeds import seed_standard_categories
-from backend.app.models.tenant import Tenant, BusinessType
+from backend.app.db.session import get_db
+from backend.app.main import app
+from backend.app.models.tenant import BusinessType, Tenant
 from backend.app.models.user import User, UserRole
-from backend.app.models.category import Category
-from backend.app.models.inventory import InventoryItem, InventoryStatus, ItemUnit
-from backend.app.models.transaction import StockTransaction, TransactionType
 from backend.app.models.alert import TenantAlertConfig
-from backend.app.core.security import get_password_hash
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def engine():
-    """Create an isolated in-memory SQLite engine with PRAGMA foreign_keys = ON."""
+    """Create an isolated in-memory SQLite engine with StaticPool and active foreign keys."""
     test_engine = create_engine(
         "sqlite:///:memory:",
         connect_args={"check_same_thread": False},
+        poolclass=StaticPool,
         echo=False,
     )
 
@@ -39,14 +41,13 @@ def engine():
     yield test_engine
 
     Base.metadata.drop_all(bind=test_engine)
+    test_engine.dispose()
 
 
 @pytest.fixture(scope="function")
 def db_session(engine) -> Generator[Session, None, None]:
-    """Provide a transactional session rolled back after every test."""
-    connection = engine.connect()
-    transaction = connection.begin()
-    session = Session(bind=connection, autocommit=False, autoflush=False)
+    """Provide a session bound to the function-scoped isolated engine."""
+    session = Session(bind=engine, autocommit=False, autoflush=False)
 
     # Seed global categories for tests
     seed_standard_categories(session)
@@ -54,9 +55,6 @@ def db_session(engine) -> Generator[Session, None, None]:
     yield session
 
     session.close()
-    if transaction.is_active:
-        transaction.rollback()
-    connection.close()
 
 
 @pytest.fixture
@@ -74,7 +72,6 @@ def tenant_a(db_session: Session) -> Tenant:
     db_session.add(tenant)
     db_session.flush()
 
-    # Create default alert config
     config = TenantAlertConfig(
         tenant_id=tenant.id,
         critical_threshold_hours=24,
@@ -84,6 +81,7 @@ def tenant_a(db_session: Session) -> Tenant:
     )
     db_session.add(config)
     db_session.flush()
+    db_session.commit()
     return tenant
 
 
@@ -111,6 +109,7 @@ def tenant_b(db_session: Session) -> Tenant:
     )
     db_session.add(config)
     db_session.flush()
+    db_session.commit()
     return tenant
 
 
@@ -126,7 +125,7 @@ def user_a_owner(db_session: Session, tenant_a: Tenant) -> User:
         is_active=True,
     )
     db_session.add(user)
-    db_session.flush()
+    db_session.commit()
     return user
 
 
@@ -142,7 +141,7 @@ def user_a_staff(db_session: Session, tenant_a: Tenant) -> User:
         is_active=True,
     )
     db_session.add(user)
-    db_session.flush()
+    db_session.commit()
     return user
 
 
@@ -158,5 +157,50 @@ def user_b_owner(db_session: Session, tenant_b: Tenant) -> User:
         is_active=True,
     )
     db_session.add(user)
-    db_session.flush()
+    db_session.commit()
     return user
+
+
+@pytest.fixture
+def token_a_owner(tenant_a: Tenant, user_a_owner: User) -> str:
+    """Bearer access token for Tenant A Owner."""
+    return create_access_token(
+        subject=user_a_owner.id,
+        tenant_id=tenant_a.id,
+        role=user_a_owner.role,
+    )
+
+
+@pytest.fixture
+def token_a_staff(tenant_a: Tenant, user_a_staff: User) -> str:
+    """Bearer access token for Tenant A Staff."""
+    return create_access_token(
+        subject=user_a_staff.id,
+        tenant_id=tenant_a.id,
+        role=user_a_staff.role,
+    )
+
+
+@pytest.fixture
+def token_b_owner(tenant_b: Tenant, user_b_owner: User) -> str:
+    """Bearer access token for Tenant B Owner."""
+    return create_access_token(
+        subject=user_b_owner.id,
+        tenant_id=tenant_b.id,
+        role=user_b_owner.role,
+    )
+
+
+@pytest.fixture
+def client(db_session: Session):
+    """FastAPI TestClient with isolated test database session override."""
+    def override_get_db():
+        try:
+            yield db_session
+        finally:
+            pass
+
+    app.dependency_overrides[get_db] = override_get_db
+    with TestClient(app) as test_client:
+        yield test_client
+    app.dependency_overrides.clear()
