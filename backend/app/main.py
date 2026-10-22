@@ -126,3 +126,26 @@ def health_readiness():
 
 # API Routers
 app.include_router(api_router, prefix=settings.API_V1_STR)
+
+# Serve Frontend Production Build if compiled
+import os
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+frontend_dist = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../frontend/dist"))
+if os.path.exists(frontend_dist):
+    assets_dir = os.path.join(frontend_dist, "assets")
+    if os.path.exists(assets_dir):
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+    @app.get("/")
+    async def serve_index():
+        return FileResponse(os.path.join(frontend_dist, "index.html"))
+
+    @app.get("/scanner")
+    async def serve_scanner():
+        scanner_html = os.path.join(os.path.dirname(__file__), "../../frontend/public/scanner.html")
+        if os.path.exists(scanner_html):
+            return FileResponse(scanner_html)
+        return FileResponse(os.path.join(frontend_dist, "index.html"))
+
