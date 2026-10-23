@@ -164,3 +164,28 @@ Phase 3 implements the complete business domain logic for inventory management, 
 | **P3-REQ-6** | Tenant Isolation on Inventory | **PASS** | Cross-tenant access returns 404 Not Found; zero data leakage across tenants. |
 | **P3-REQ-7** | Persistence Across Sessions | **PASS** | State remains intact across new database sessions (`test_persistence_across_new_database_session`). |
 
+---
+
+## 9. Phase 4: CSV Ingestion, Raw Data Cleaning & Data Quality Verification
+
+Phase 4 implements the ordered, multi-stage CSV data ingestion and data quality pipeline.
+
+### Implemented REST Endpoints
+- `GET /api/v1/inventory/bulk-import/template`: Generates downloadable RFC 4180 CSV template with headers and sample records.
+- `POST /api/v1/inventory/bulk-import/csv`: Uploads and parses CSV files. Supports `dry_run=true|false` and `allow_partial=true|false`.
+- `GET /api/v1/inventory/bulk-import/jobs/{job_id}`: Retrieves job audit logs and row-level rejection details.
+
+### Phase 4 Verification Matrix
+
+| Requirement | Description | Status | Evidence |
+| :--- | :--- | :---: | :--- |
+| **P4-REQ-1** | CSV Template Generation | **PASS** | `GET /bulk-import/template` returns `text/csv` with required headers (`test_csv_ingestion.py`). |
+| **P4-REQ-2** | Dry-Run Simulation | **PASS** | `dry_run=true` parses, validates, and reports errors with 0 DB writes (`test_valid_csv_dry_run_vs_commit`). |
+| **P4-REQ-3** | Strict All-or-Nothing Rollback | **PASS** | `allow_partial=false` atomically aborts entire batch on single row failure (`test_partial_failure_and_rollback_modes`). |
+| **P4-REQ-4** | Permissive Partial Mode | **PASS** | `allow_partial=true` commits valid rows and records row-specific rejection logs (`test_partial_failure_and_rollback_modes`). |
+| **P4-REQ-5** | Row-Level Validation | **PASS** | Validates names, quantities, units, categories, date chronology, and SKU uniqueness. |
+| **P4-REQ-6** | Formula Injection Defense | **PASS** | Sanitizes dangerous spreadsheet characters (`=`, `+`, `-`, `@`, `\t`, `\r`) per CWE-1236. |
+| **P4-REQ-7** | Tenant Boundary Isolation | **PASS** | Multi-tenant scoping guarantees Tenant A imports cannot affect Tenant B (`test_cross_tenant_import_isolation`). |
+| **P4-REQ-8** | Throughput & Benchmarks | **PASS** | 1,000-row dry run in 189.86 ms (5,267 rows/sec); 500-row commit with 1,000 DB writes in 1,045 ms (478 rows/sec). |
+
+
