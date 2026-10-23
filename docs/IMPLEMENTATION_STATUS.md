@@ -188,4 +188,33 @@ Phase 4 implements the ordered, multi-stage CSV data ingestion and data quality 
 | **P4-REQ-7** | Tenant Boundary Isolation | **PASS** | Multi-tenant scoping guarantees Tenant A imports cannot affect Tenant B (`test_cross_tenant_import_isolation`). |
 | **P4-REQ-8** | Throughput & Benchmarks | **PASS** | 1,000-row dry run in 189.86 ms (5,267 rows/sec); 500-row commit with 1,000 DB writes in 1,045 ms (478 rows/sec). |
 
+---
+
+## 10. Phase 5: Expiry Tracking, Food Classification & Alert Engine Verification
+
+Phase 5 implements the timezone-aware expiry calculation engine, multi-tier classification, food safety donation guardrails, alert deduplication, and scheduler telemetry.
+
+### Implemented REST Endpoints
+- `GET /api/v1/alerts/expiring`: Queries active items approaching expiry, segmented by alert severity (`CRITICAL`, `WARNING`, `NOTICE`, `EXPIRED`).
+- `POST /api/v1/alerts/evaluate`: Triggers on-demand evaluation of all tenant inventory records.
+- `POST /api/v1/alerts/{alert_id}/acknowledge`: Acknowledges an alert and records staff mitigation action (`MARKED_FOR_DONATION`, `DISCOUNTED`, `DISCARDED`).
+- `GET /api/v1/alerts/config`: Retrieves tenant-specific warning and critical threshold hours/days.
+- `PUT /api/v1/alerts/config`: Updates tenant alert threshold parameters.
+- `GET /api/v1/alerts/scheduler/diagnostics`: Reports scheduler mode, background worker availability, and missing dependencies.
+
+### Phase 5 Verification Matrix
+
+| Requirement | Description | Status | Evidence |
+| :--- | :--- | :---: | :--- |
+| **P5-REQ-1** | Food Taxonomy & Storage Rules | **PASS** | 10 standardized categories with Celsius min/max storage constraints (`test_database_schema.py`). |
+| **P5-REQ-2** | Timezone-Aware Calculation | **PASS** | Anchored at local 23:59:59.999999; verified across New York, UTC, and Kolkata (`test_different_timezone_boundaries`). |
+| **P5-REQ-3** | Food Safety Donation Guardrail | **PASS** | Expired items strictly receive `donation_eligible = false` (`test_already_expired_items_and_food_safety_rule`). |
+| **P5-REQ-4** | Configurable Alert Thresholds | **PASS** | Per-tenant critical hours, warning days, and notice days (`test_api_expiry_evaluation_and_config`). |
+| **P5-REQ-5** | Alert Deduplication & Escalation | **PASS** | Suppresses duplicate alerts within 24h; immediately escalates on level transitions (`test_repeated_runs_and_alert_deduplication`). |
+| **P5-REQ-6** | Tenant Isolation on Alerts | **PASS** | Tenant A alert history inaccessible to Tenant B (`test_tenant_isolation_on_expiry`). |
+| **P5-REQ-7** | Synthetic Fixture Accuracy | **PASS** | 20 synthetic fixtures evaluated with 100% agreement: 0 false alerts, 0 missed alerts (`test_synthetic_fixture_classification_accuracy`). |
+| **P5-REQ-8** | Performance Benchmarks | **PASS** | Evaluates 1,500 active items in 471.25 ms (3,183 items/sec); deduplication in 424.47 ms (3,534 items/sec). |
+| **P5-REQ-9** | Scheduler Telemetry | **PASS** | Accurate reporting of `ON_DEMAND_AND_CRON` without false background worker claims (`test_scheduler_isolated_error_resilience`). |
+
+
 
