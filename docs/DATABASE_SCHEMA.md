@@ -331,3 +331,24 @@ Immutable record of all security-sensitive actions across authentication, data m
   - Decimals stored as `REAL` or string-exact numbers.
   - Foreign key constraints enabled automatically on session connection: `PRAGMA foreign_keys = ON;`.
   - Write-Ahead Logging enabled for high-concurrency read/write: `PRAGMA journal_mode = WAL;`.
+
+---
+
+## 4. Migration Execution & Verification Status
+
+- **Migration Tool**: Alembic 1.14.1
+- **Current Head**: `2d0b94e06dc8` (`backend/migrations/versions/2d0b94e06dc8_initial_schema.py`)
+- **Execution Status**: Applied (`head`) on active SQLite database and validated against in-memory test fixtures.
+- **Constraint Test Suite (`backend/tests/test_database_schema.py`)**: 11 / 11 tests passing:
+  - `test_table_presence_and_category_seeding`: PASS
+  - `test_foreign_key_tenant_constraint`: PASS
+  - `test_foreign_key_category_constraint`: PASS
+  - `test_unique_tenant_slug`: PASS
+  - `test_unique_sku_within_same_tenant`: PASS
+  - `test_same_sku_allowed_across_different_tenants`: PASS
+  - `test_check_constraint_negative_quantity`: PASS
+  - `test_check_constraint_negative_cost`: PASS
+  - `test_check_constraint_expiry_before_purchase`: PASS
+  - `test_stock_transaction_math_and_boundaries`: PASS
+  - `test_tenant_cascade_delete`: PASS
+

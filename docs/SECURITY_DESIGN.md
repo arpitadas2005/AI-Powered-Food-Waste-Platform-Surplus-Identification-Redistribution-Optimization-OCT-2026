@@ -220,3 +220,27 @@ All state-modifying actions write an immutable row to `audit_events`:
 ### 6.3 Request Tracing
 - A unique request identifier (`X-Request-ID`) is assigned to every inbound HTTP request by middleware.
 - The `request_id` is propagated through all application log entries and included in standard error response envelopes, facilitating end-to-end incident investigation without exposing internal stack traces.
+
+---
+
+## 7. Security Implementation & Verification Status
+
+- **Tenant Isolation Test Suite (`backend/tests/test_tenant_security.py`)**: 9 / 9 tests passing:
+  - `test_resolve_tenant_context_success`: PASS (Resolves active tenant & user context)
+  - `test_resolve_tenant_context_inactive_user`: PASS (Rejects inactive user with 401)
+  - `test_resolve_tenant_context_inactive_tenant`: PASS (Rejects deactivated tenant organization with 401)
+  - `test_resolve_tenant_context_claim_spoofing`: PASS (Rejects mismatched JWT tenant claim with 403)
+  - `test_scope_query_isolation`: PASS (Verifies `scope_query` appends `WHERE tenant_id = ...`)
+  - `test_verify_tenant_ownership_cross_access`: PASS (Rejects cross-tenant record mutation with `CrossTenantAccessError`)
+  - `test_enforce_tenant_ownership_overrides_client_input`: PASS (Forces `tenant_id` assignment from token)
+  - `test_transaction_history_cross_tenant_isolation`: PASS (Transactions strictly isolated by tenant)
+  - `test_alert_history_cross_tenant_isolation`: PASS (Alert logs strictly isolated by tenant)
+
+- **Transaction & Cryptography Security Test Suite (`backend/tests/test_transactions_and_rollback.py`)**: 6 / 6 tests passing:
+  - `test_transaction_atomic_rollback_on_failure`: PASS (Atomic rollback on mutation errors)
+  - `test_stock_adjustment_atomic_ledger_reconciliation`: PASS (Stock balance matches ledger transaction deltas)
+  - `test_password_hashing_and_verification`: PASS (Bcrypt salt generation & password verification)
+  - `test_jwt_token_minting_and_decoding`: PASS (HS256 minting, claim encoding, and expiration)
+  - `test_pos_webhook_hmac_signature_verification`: PASS (HMAC-SHA256 signature verification)
+  - `test_pos_secret_hashing`: PASS (SHA-256 secret hashing for POS API keys)
+
