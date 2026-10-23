@@ -153,10 +153,12 @@ def test_e2e_workflow_expiry_evaluation_and_donation_guardrail(client: TestClien
     Workflow 3: Create items near/past expiry -> Run evaluation -> Verify horizons and donation guardrails.
     """
     headers = {"Authorization": f"Bearer {token_a_owner}"}
-    today = date.today()
+    import zoneinfo
+    tz = zoneinfo.ZoneInfo(tenant_a.timezone or "UTC")
+    tenant_today = datetime.now(tz).date()
     cat = db_session.query(Category).first()
 
-    # Expired item (yesterday)
+    # Expired item (yesterday in tenant timezone)
     exp_item = InventoryItem(
         tenant_id=tenant_a.id,
         category_id=cat.id,
@@ -165,11 +167,11 @@ def test_e2e_workflow_expiry_evaluation_and_donation_guardrail(client: TestClien
         current_quantity=5.0,
         unit=ItemUnit.KG.value,
         cost_per_unit=8.00,
-        purchase_date=today - timedelta(days=5),
-        expiry_date=today - timedelta(days=1),
+        purchase_date=tenant_today - timedelta(days=5),
+        expiry_date=tenant_today - timedelta(days=1),
         status=InventoryStatus.ACTIVE.value,
     )
-    # Critical item (today)
+    # Critical item (today in tenant timezone)
     crit_item = InventoryItem(
         tenant_id=tenant_a.id,
         category_id=cat.id,
@@ -178,8 +180,8 @@ def test_e2e_workflow_expiry_evaluation_and_donation_guardrail(client: TestClien
         current_quantity=10.0,
         unit=ItemUnit.UNITS.value,
         cost_per_unit=3.50,
-        purchase_date=today - timedelta(days=1),
-        expiry_date=today,
+        purchase_date=tenant_today - timedelta(days=1),
+        expiry_date=tenant_today,
         status=InventoryStatus.ACTIVE.value,
     )
     db_session.add_all([exp_item, crit_item])
