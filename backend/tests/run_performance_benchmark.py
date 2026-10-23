@@ -43,6 +43,7 @@ from backend.app.services.csv_service import process_csv_import
 from backend.app.services.expiry_service import evaluate_tenant_inventory
 from backend.app.services.inventory_service import (
     adjust_stock_quantity,
+    get_item_transactions,
     list_inventory_items,
     lookup_by_barcode,
 )
@@ -225,6 +226,33 @@ def run_benchmarks():
         barcode_latencies.append((t1 - t0) * 1000.0)
     stats_barcode = format_stats(barcode_latencies)
     print(f"      Barcode Point-Lookup -> p50: {stats_barcode['p50_ms']} ms | p95: {stats_barcode['p95_ms']} ms")
+
+    # Stock Adjustment Latency
+    target_item = items[0]
+    adj_latencies = []
+    for i in range(50):
+        req = StockAdjustmentRequest(
+            quantity_delta=1.0,
+            adjustment_type="RESTOCK",
+            reason=f"Bench restock {i}",
+            idempotency_key=str(uuid.uuid4()),
+        )
+        t0 = time.perf_counter()
+        adjust_stock_quantity(db, tenant.id, user.id, target_item.id, req)
+        t1 = time.perf_counter()
+        adj_latencies.append((t1 - t0) * 1000.0)
+    stats_adj = format_stats(adj_latencies)
+    print(f"      Stock Adjustment (Atomic Ledger) -> p50: {stats_adj['p50_ms']} ms | p95: {stats_adj['p95_ms']} ms")
+
+    # Transaction History Query Latency
+    tx_latencies = []
+    for _ in range(50):
+        t0 = time.perf_counter()
+        txs = get_item_transactions(db, tenant.id, target_item.id)
+        t1 = time.perf_counter()
+        tx_latencies.append((t1 - t0) * 1000.0)
+    stats_tx = format_stats(tx_latencies)
+    print(f"      Transaction History Query -> p50: {stats_tx['p50_ms']} ms | p95: {stats_tx['p95_ms']} ms")
 
     # 6. CSV Bulk Ingestion Throughput
     print("\n[4/5] Benchmarking CSV Import Pipeline...")

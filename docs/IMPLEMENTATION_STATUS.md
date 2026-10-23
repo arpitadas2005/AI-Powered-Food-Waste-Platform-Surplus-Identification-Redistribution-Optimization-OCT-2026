@@ -136,3 +136,31 @@ backend/tests/test_transactions_and_rollback.py::test_pos_secret_hashing PASSED 
 
 1. **Dual-Engine Strategy**: SQLite WAL mode is verified for local development and test execution. High-concurrency production deployments will target PostgreSQL 16+ to enable native Row-Level Security policies and row-level locks (`SELECT ... FOR UPDATE`).
 2. **External POS Credentials**: Square and Clover secret hashing and webhook verification are tested and verified using mock HMAC payloads; live merchant sync requires production API keys when going live.
+
+---
+
+## 8. Phase 3: Inventory Core Engine & Stock Ledger Verification
+
+Phase 3 implements the complete business domain logic for inventory management, multi-criteria filtering, stock adjustments, and immutable transaction history auditing.
+
+### Implemented REST Endpoints
+- `POST /api/v1/inventory`: Creates new inventory item and writes atomic `INITIAL_COUNT` stock transaction.
+- `GET /api/v1/inventory`: Lists, searches (name, SKU, barcode), filters (category, storage, status), sorts, and paginates inventory items.
+- `GET /api/v1/inventory/{id}`: Retrieves single item details with joined category metadata.
+- `PATCH /api/v1/inventory/{id}`: Partially updates item attributes, validates dates, and recalculates dynamic status.
+- `DELETE /api/v1/inventory/{id}`: Soft-deletes / archives item without cascading data loss to transaction history.
+- `POST /api/v1/inventory/{id}/adjust`: Atomically adjusts physical balance with concurrency locking and idempotency protection.
+- `GET /api/v1/inventory/{id}/transactions`: Queries chronological double-entry transaction history for an item.
+
+### Phase 3 Verification Matrix
+
+| Requirement | Description | Status | Evidence |
+| :--- | :--- | :---: | :--- |
+| **P3-REQ-1** | Inventory CRUD | **PASS** | Full CRUD, positive quantity validation, date chronology (`test_inventory_engine.py`). |
+| **P3-REQ-2** | Search, Filtering & Pagination | **PASS** | Multi-attribute search, category/storage/status filters, pagination limits (`test_inventory_engine.py`). |
+| **P3-REQ-3** | Stock Adjustments & Ledger | **PASS** | Atomic balance mutation and `stock_transactions` entry creation (`test_stock_adjustments_and_transaction_history`). |
+| **P3-REQ-4** | Negative Stock Prevention | **PASS** | Rejects stock deductions exceeding current balance with HTTP 400 (`test_negative_stock_prevention_and_idempotency`). |
+| **P3-REQ-5** | Idempotency & Duplicate Protection | **PASS** | Replaying request with identical `idempotency_key` returns existing transaction without double deduction. |
+| **P3-REQ-6** | Tenant Isolation on Inventory | **PASS** | Cross-tenant access returns 404 Not Found; zero data leakage across tenants. |
+| **P3-REQ-7** | Persistence Across Sessions | **PASS** | State remains intact across new database sessions (`test_persistence_across_new_database_session`). |
+
