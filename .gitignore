@@ -46,6 +46,10 @@ htmlcov/
 *.swp
 *.swo
 
+# ML Model Binaries
+*.joblib
+*.pkl
+
 # OS
 Thumbs.db
 Desktop.ini

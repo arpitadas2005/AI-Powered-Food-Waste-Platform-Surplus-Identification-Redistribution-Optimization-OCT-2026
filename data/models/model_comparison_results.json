@@ -1,0 +1,2049 @@
+{
+  "pipeline_executed_at": "2026-10-24T09:52:34.883490",
+  "validation_results": {
+    "Naive": {
+      "overall": {
+        "mae": 111.797,
+        "rmse": 124.671,
+        "wape_pct": 85.71,
+        "mase": 11.039,
+        "mbe": -111.788,
+        "accuracy_pct": 14.29,
+        "sample_count": 1045
+      },
+      "by_sku": {
+        "BAK-CROI-01": {
+          "mae": 149.204,
+          "rmse": 149.928,
+          "wape_pct": 85.62,
+          "mase": 12.504,
+          "mbe": -149.204,
+          "accuracy_pct": 14.38,
+          "sample_count": 55
+        },
+        "BAK-SOUR-01": {
+          "mae": 150.378,
+          "rmse": 150.884,
+          "wape_pct": 85.74,
+          "mase": 16.033,
+          "mbe": -150.378,
+          "accuracy_pct": 14.26,
+          "sample_count": 55
+        },
+        "BEV-COLA-01": {
+          "mae": 169.513,
+          "rmse": 169.872,
+          "wape_pct": 85.68,
+          "mase": 12.605,
+          "mbe": -169.513,
+          "accuracy_pct": 14.32,
+          "sample_count": 55
+        },
+        "BEV-OJ-01": {
+          "mae": 166.918,
+          "rmse": 167.377,
+          "wape_pct": 85.63,
+          "mase": 14.695,
+          "mbe": -166.918,
+          "accuracy_pct": 14.37,
+          "sample_count": 55
+        },
+        "DAI-EGGS-01": {
+          "mae": 122.012,
+          "rmse": 122.494,
+          "wape_pct": 85.53,
+          "mase": 12.967,
+          "mbe": -122.012,
+          "accuracy_pct": 14.47,
+          "sample_count": 55
+        },
+        "DAI-MILK-01": {
+          "mae": 125.085,
+          "rmse": 125.34,
+          "wape_pct": 85.79,
+          "mase": 14.346,
+          "mbe": -125.085,
+          "accuracy_pct": 14.21,
+          "sample_count": 55
+        },
+        "DEL-SAND-01": {
+          "mae": 111.469,
+          "rmse": 111.813,
+          "wape_pct": 85.65,
+          "mase": 12.11,
+          "mbe": -111.469,
+          "accuracy_pct": 14.35,
+          "sample_count": 55
+        },
+        "FRO-PEAS-01": {
+          "mae": 99.808,
+          "rmse": 100.16,
+          "wape_pct": 85.92,
+          "mase": 12.829,
+          "mbe": -99.808,
+          "accuracy_pct": 14.08,
+          "sample_count": 55
+        },
+        "FRO-PIZZ-01": {
+          "mae": 101.251,
+          "rmse": 101.639,
+          "wape_pct": 85.7,
+          "mase": 12.749,
+          "mbe": -101.251,
+          "accuracy_pct": 14.3,
+          "sample_count": 55
+        },
+        "MEA-BEEF-01": {
+          "mae": 93.013,
+          "rmse": 93.325,
+          "wape_pct": 85.77,
+          "mase": 14.127,
+          "mbe": -93.013,
+          "accuracy_pct": 14.23,
+          "sample_count": 55
+        },
+        "MEA-CHIC-01": {
+          "mae": 90.636,
+          "rmse": 90.843,
+          "wape_pct": 85.79,
+          "mase": 11.716,
+          "mbe": -90.636,
+          "accuracy_pct": 14.21,
+          "sample_count": 55
+        },
+        "PAN-PAST-01": {
+          "mae": 75.559,
+          "rmse": 75.765,
+          "wape_pct": 85.67,
+          "mase": 13.545,
+          "mbe": -75.559,
+          "accuracy_pct": 14.33,
+          "sample_count": 55
+        },
+        "PAN-RICE-01": {
+          "mae": 73.106,
+          "rmse": 73.363,
+          "wape_pct": 85.79,
+          "mase": 13.768,
+          "mbe": -73.106,
+          "accuracy_pct": 14.21,
+          "sample_count": 55
+        },
+        "PAN-TRUF-01": {
+          "mae": 0.655,
+          "rmse": 0.894,
+          "wape_pct": 102.86,
+          "mase": 1.2,
+          "mbe": -0.545,
+          "accuracy_pct": 0.0,
+          "sample_count": 55
+        },
+        "PRO-BANA-01": {
+          "mae": 197.137,
+          "rmse": 197.814,
+          "wape_pct": 85.69,
+          "mase": 11.76,
+          "mbe": -197.137,
+          "accuracy_pct": 14.31,
+          "sample_count": 55
+        },
+        "PRO-SPIN-01": {
+          "mae": 197.318,
+          "rmse": 197.877,
+          "wape_pct": 85.74,
+          "mase": 15.346,
+          "mbe": -197.318,
+          "accuracy_pct": 14.26,
+          "sample_count": 55
+        },
+        "SEA-CAVI-01": {
+          "mae": 0.836,
+          "rmse": 1.027,
+          "wape_pct": 93.88,
+          "mase": 1.136,
+          "mbe": -0.764,
+          "accuracy_pct": 6.12,
+          "sample_count": 55
+        },
+        "SEA-SALM-01": {
+          "mae": 60.797,
+          "rmse": 61.058,
+          "wape_pct": 85.66,
+          "mase": 13.406,
+          "mbe": -60.797,
+          "accuracy_pct": 14.34,
+          "sample_count": 55
+        },
+        "SNA-CHIP-01": {
+          "mae": 139.454,
+          "rmse": 139.716,
+          "wape_pct": 85.7,
+          "mase": 12.881,
+          "mbe": -139.454,
+          "accuracy_pct": 14.3,
+          "sample_count": 55
+        }
+      },
+      "by_pattern": {
+        "INTERMITTENT": {
+          "mae": 0.745,
+          "rmse": 0.963,
+          "wape_pct": 97.62,
+          "mase": 1.177,
+          "mbe": -0.655,
+          "accuracy_pct": 2.38,
+          "sample_count": 110
+        },
+        "SMOOTH": {
+          "mae": 124.862,
+          "rmse": 131.801,
+          "wape_pct": 85.7,
+          "mase": 11.645,
+          "mbe": -124.862,
+          "accuracy_pct": 14.3,
+          "sample_count": 935
+        }
+      }
+    },
+    "SeasonalNaive": {
+      "overall": {
+        "mae": 111.555,
+        "rmse": 124.424,
+        "wape_pct": 85.53,
+        "mase": 11.015,
+        "mbe": -111.542,
+        "accuracy_pct": 14.47,
+        "sample_count": 1045
+      },
+      "by_sku": {
+        "BAK-CROI-01": {
+          "mae": 149.076,
+          "rmse": 149.779,
+          "wape_pct": 85.55,
+          "mase": 12.494,
+          "mbe": -149.076,
+          "accuracy_pct": 14.45,
+          "sample_count": 55
+        },
+        "BAK-SOUR-01": {
+          "mae": 150.041,
+          "rmse": 150.595,
+          "wape_pct": 85.55,
+          "mase": 15.997,
+          "mbe": -150.041,
+          "accuracy_pct": 14.45,
+          "sample_count": 55
+        },
+        "BEV-COLA-01": {
+          "mae": 169.537,
+          "rmse": 169.888,
+          "wape_pct": 85.69,
+          "mase": 12.607,
+          "mbe": -169.537,
+          "accuracy_pct": 14.31,
+          "sample_count": 55
+        },
+        "BEV-OJ-01": {
+          "mae": 166.527,
+          "rmse": 166.967,
+          "wape_pct": 85.43,
+          "mase": 14.661,
+          "mbe": -166.527,
+          "accuracy_pct": 14.57,
+          "sample_count": 55
+        },
+        "DAI-EGGS-01": {
+          "mae": 121.353,
+          "rmse": 121.842,
+          "wape_pct": 85.07,
+          "mase": 12.897,
+          "mbe": -121.353,
+          "accuracy_pct": 14.93,
+          "sample_count": 55
+        },
+        "DAI-MILK-01": {
+          "mae": 124.589,
+          "rmse": 124.864,
+          "wape_pct": 85.45,
+          "mase": 14.289,
+          "mbe": -124.589,
+          "accuracy_pct": 14.55,
+          "sample_count": 55
+        },
+        "DEL-SAND-01": {
+          "mae": 111.239,
+          "rmse": 111.547,
+          "wape_pct": 85.47,
+          "mase": 12.085,
+          "mbe": -111.239,
+          "accuracy_pct": 14.53,
+          "sample_count": 55
+        },
+        "FRO-PEAS-01": {
+          "mae": 99.324,
+          "rmse": 99.653,
+          "wape_pct": 85.5,
+          "mase": 12.767,
+          "mbe": -99.324,
+          "accuracy_pct": 14.5,
+          "sample_count": 55
+        },
+        "FRO-PIZZ-01": {
+          "mae": 100.882,
+          "rmse": 101.285,
+          "wape_pct": 85.39,
+          "mase": 12.703,
+          "mbe": -100.882,
+          "accuracy_pct": 14.61,
+          "sample_count": 55
+        },
+        "MEA-BEEF-01": {
+          "mae": 92.776,
+          "rmse": 93.092,
+          "wape_pct": 85.55,
+          "mase": 14.091,
+          "mbe": -92.776,
+          "accuracy_pct": 14.45,
+          "sample_count": 55
+        },
+        "MEA-CHIC-01": {
+          "mae": 90.579,
+          "rmse": 90.81,
+          "wape_pct": 85.74,
+          "mase": 11.709,
+          "mbe": -90.579,
+          "accuracy_pct": 14.26,
+          "sample_count": 55
+        },
+        "PAN-PAST-01": {
+          "mae": 75.342,
+          "rmse": 75.538,
+          "wape_pct": 85.42,
+          "mase": 13.506,
+          "mbe": -75.342,
+          "accuracy_pct": 14.58,
+          "sample_count": 55
+        },
+        "PAN-RICE-01": {
+          "mae": 72.999,
+          "rmse": 73.275,
+          "wape_pct": 85.67,
+          "mase": 13.748,
+          "mbe": -72.999,
+          "accuracy_pct": 14.33,
+          "sample_count": 55
+        },
+        "PAN-TRUF-01": {
+          "mae": 0.727,
+          "rmse": 0.915,
+          "wape_pct": 114.29,
+          "mase": 1.333,
+          "mbe": -0.509,
+          "accuracy_pct": 0.0,
+          "sample_count": 55
+        },
+        "PRO-BANA-01": {
+          "mae": 196.799,
+          "rmse": 197.472,
+          "wape_pct": 85.54,
+          "mase": 11.74,
+          "mbe": -196.799,
+          "accuracy_pct": 14.46,
+          "sample_count": 55
+        },
+        "PRO-SPIN-01": {
+          "mae": 197.181,
+          "rmse": 197.739,
+          "wape_pct": 85.68,
+          "mase": 15.335,
+          "mbe": -197.181,
+          "accuracy_pct": 14.32,
+          "sample_count": 55
+        },
+        "SEA-CAVI-01": {
+          "mae": 0.782,
+          "rmse": 1.0,
+          "wape_pct": 87.76,
+          "mase": 1.062,
+          "mbe": -0.745,
+          "accuracy_pct": 12.24,
+          "sample_count": 55
+        },
+        "SEA-SALM-01": {
+          "mae": 60.712,
+          "rmse": 60.95,
+          "wape_pct": 85.54,
+          "mase": 13.387,
+          "mbe": -60.712,
+          "accuracy_pct": 14.46,
+          "sample_count": 55
+        },
+        "SNA-CHIP-01": {
+          "mae": 139.081,
+          "rmse": 139.364,
+          "wape_pct": 85.47,
+          "mase": 12.847,
+          "mbe": -139.081,
+          "accuracy_pct": 14.53,
+          "sample_count": 55
+        }
+      },
+      "by_pattern": {
+        "INTERMITTENT": {
+          "mae": 0.755,
+          "rmse": 0.958,
+          "wape_pct": 98.81,
+          "mase": 1.192,
+          "mbe": -0.627,
+          "accuracy_pct": 1.19,
+          "sample_count": 110
+        },
+        "SMOOTH": {
+          "mae": 124.59,
+          "rmse": 131.539,
+          "wape_pct": 85.52,
+          "mase": 11.62,
+          "mbe": -124.59,
+          "accuracy_pct": 14.48,
+          "sample_count": 935
+        }
+      }
+    },
+    "MovingAverage": {
+      "overall": {
+        "mae": 111.58,
+        "rmse": 124.33,
+        "wape_pct": 85.54,
+        "mase": 11.017,
+        "mbe": -111.57,
+        "accuracy_pct": 14.46,
+        "sample_count": 1045
+      },
+      "by_sku": {
+        "BAK-CROI-01": {
+          "mae": 148.955,
+          "rmse": 149.522,
+          "wape_pct": 85.48,
+          "mase": 12.483,
+          "mbe": -148.955,
+          "accuracy_pct": 14.52,
+          "sample_count": 55
+        },
+        "BAK-SOUR-01": {
+          "mae": 150.058,
+          "rmse": 150.478,
+          "wape_pct": 85.56,
+          "mase": 15.999,
+          "mbe": -150.058,
+          "accuracy_pct": 14.44,
+          "sample_count": 55
+        },
+        "BEV-COLA-01": {
+          "mae": 169.43,
+          "rmse": 169.612,
+          "wape_pct": 85.64,
+          "mase": 12.599,
+          "mbe": -169.43,
+          "accuracy_pct": 14.36,
+          "sample_count": 55
+        },
+        "BEV-OJ-01": {
+          "mae": 166.488,
+          "rmse": 166.769,
+          "wape_pct": 85.41,
+          "mase": 14.658,
+          "mbe": -166.488,
+          "accuracy_pct": 14.59,
+          "sample_count": 55
+        },
+        "DAI-EGGS-01": {
+          "mae": 121.591,
+          "rmse": 121.945,
+          "wape_pct": 85.23,
+          "mase": 12.922,
+          "mbe": -121.591,
+          "accuracy_pct": 14.77,
+          "sample_count": 55
+        },
+        "DAI-MILK-01": {
+          "mae": 124.724,
+          "rmse": 124.859,
+          "wape_pct": 85.54,
+          "mase": 14.304,
+          "mbe": -124.724,
+          "accuracy_pct": 14.46,
+          "sample_count": 55
+        },
+        "DEL-SAND-01": {
+          "mae": 111.262,
+          "rmse": 111.477,
+          "wape_pct": 85.49,
+          "mase": 12.088,
+          "mbe": -111.262,
+          "accuracy_pct": 14.51,
+          "sample_count": 55
+        },
+        "FRO-PEAS-01": {
+          "mae": 99.475,
+          "rmse": 99.734,
+          "wape_pct": 85.63,
+          "mase": 12.787,
+          "mbe": -99.475,
+          "accuracy_pct": 14.37,
+          "sample_count": 55
+        },
+        "FRO-PIZZ-01": {
+          "mae": 100.927,
+          "rmse": 101.245,
+          "wape_pct": 85.43,
+          "mase": 12.709,
+          "mbe": -100.927,
+          "accuracy_pct": 14.57,
+          "sample_count": 55
+        },
+        "MEA-BEEF-01": {
+          "mae": 92.797,
+          "rmse": 93.036,
+          "wape_pct": 85.57,
+          "mase": 14.094,
+          "mbe": -92.797,
+          "accuracy_pct": 14.43,
+          "sample_count": 55
+        },
+        "MEA-CHIC-01": {
+          "mae": 90.594,
+          "rmse": 90.752,
+          "wape_pct": 85.75,
+          "mase": 11.711,
+          "mbe": -90.594,
+          "accuracy_pct": 14.25,
+          "sample_count": 55
+        },
+        "PAN-PAST-01": {
+          "mae": 75.41,
+          "rmse": 75.545,
+          "wape_pct": 85.5,
+          "mase": 13.519,
+          "mbe": -75.41,
+          "accuracy_pct": 14.5,
+          "sample_count": 55
+        },
+        "PAN-RICE-01": {
+          "mae": 73.016,
+          "rmse": 73.217,
+          "wape_pct": 85.69,
+          "mase": 13.751,
+          "mbe": -73.016,
+          "accuracy_pct": 14.31,
+          "sample_count": 55
+        },
+        "PAN-TRUF-01": {
+          "mae": 0.668,
+          "rmse": 0.853,
+          "wape_pct": 104.9,
+          "mase": 1.224,
+          "mbe": -0.538,
+          "accuracy_pct": 0.0,
+          "sample_count": 55
+        },
+        "PRO-BANA-01": {
+          "mae": 196.885,
+          "rmse": 197.369,
+          "wape_pct": 85.58,
+          "mase": 11.745,
+          "mbe": -196.885,
+          "accuracy_pct": 14.42,
+          "sample_count": 55
+        },
+        "PRO-SPIN-01": {
+          "mae": 197.087,
+          "rmse": 197.487,
+          "wape_pct": 85.64,
+          "mase": 15.328,
+          "mbe": -197.087,
+          "accuracy_pct": 14.36,
+          "sample_count": 55
+        },
+        "SEA-CAVI-01": {
+          "mae": 0.81,
+          "rmse": 0.972,
+          "wape_pct": 90.96,
+          "mase": 1.101,
+          "mbe": -0.753,
+          "accuracy_pct": 9.04,
+          "sample_count": 55
+        },
+        "SEA-SALM-01": {
+          "mae": 60.709,
+          "rmse": 60.889,
+          "wape_pct": 85.53,
+          "mase": 13.387,
+          "mbe": -60.709,
+          "accuracy_pct": 14.47,
+          "sample_count": 55
+        },
+        "SNA-CHIP-01": {
+          "mae": 139.138,
+          "rmse": 139.322,
+          "wape_pct": 85.51,
+          "mase": 12.852,
+          "mbe": -139.138,
+          "accuracy_pct": 14.49,
+          "sample_count": 55
+        }
+      },
+      "by_pattern": {
+        "INTERMITTENT": {
+          "mae": 0.739,
+          "rmse": 0.914,
+          "wape_pct": 96.77,
+          "mase": 1.167,
+          "mbe": -0.645,
+          "accuracy_pct": 3.23,
+          "sample_count": 110
+        },
+        "SMOOTH": {
+          "mae": 124.62,
+          "rmse": 131.44,
+          "wape_pct": 85.54,
+          "mase": 11.623,
+          "mbe": -124.62,
+          "accuracy_pct": 14.46,
+          "sample_count": 935
+        }
+      }
+    },
+    "HistoricalMean": {
+      "overall": {
+        "mae": 7.349,
+        "rmse": 9.948,
+        "wape_pct": 5.63,
+        "mase": 0.726,
+        "mbe": -4.958,
+        "accuracy_pct": 94.37,
+        "sample_count": 1045
+      },
+      "by_sku": {
+        "BAK-CROI-01": {
+          "mae": 10.912,
+          "rmse": 14.376,
+          "wape_pct": 6.26,
+          "mase": 0.915,
+          "mbe": -6.351,
+          "accuracy_pct": 93.74,
+          "sample_count": 55
+        },
+        "BAK-SOUR-01": {
+          "mae": 12.286,
+          "rmse": 14.114,
+          "wape_pct": 7.0,
+          "mase": 1.31,
+          "mbe": -8.059,
+          "accuracy_pct": 93.0,
+          "sample_count": 55
+        },
+        "BEV-COLA-01": {
+          "mae": 6.218,
+          "rmse": 8.54,
+          "wape_pct": 3.14,
+          "mase": 0.462,
+          "mbe": -3.406,
+          "accuracy_pct": 96.86,
+          "sample_count": 55
+        },
+        "BEV-OJ-01": {
+          "mae": 8.224,
+          "rmse": 10.038,
+          "wape_pct": 4.22,
+          "mase": 0.724,
+          "mbe": -1.623,
+          "accuracy_pct": 95.78,
+          "sample_count": 55
+        },
+        "DAI-EGGS-01": {
+          "mae": 7.968,
+          "rmse": 10.323,
+          "wape_pct": 5.59,
+          "mase": 0.847,
+          "mbe": -3.38,
+          "accuracy_pct": 94.41,
+          "sample_count": 55
+        },
+        "DAI-MILK-01": {
+          "mae": 6.051,
+          "rmse": 6.993,
+          "wape_pct": 4.15,
+          "mase": 0.694,
+          "mbe": -4.694,
+          "accuracy_pct": 95.85,
+          "sample_count": 55
+        },
+        "DEL-SAND-01": {
+          "mae": 7.807,
+          "rmse": 9.454,
+          "wape_pct": 6.0,
+          "mase": 0.848,
+          "mbe": -6.386,
+          "accuracy_pct": 94.0,
+          "sample_count": 55
+        },
+        "FRO-PEAS-01": {
+          "mae": 6.903,
+          "rmse": 8.462,
+          "wape_pct": 5.94,
+          "mase": 0.887,
+          "mbe": -4.607,
+          "accuracy_pct": 94.06,
+          "sample_count": 55
+        },
+        "FRO-PIZZ-01": {
+          "mae": 8.221,
+          "rmse": 10.233,
+          "wape_pct": 6.96,
+          "mase": 1.035,
+          "mbe": -6.535,
+          "accuracy_pct": 93.04,
+          "sample_count": 55
+        },
+        "MEA-BEEF-01": {
+          "mae": 7.135,
+          "rmse": 8.485,
+          "wape_pct": 6.58,
+          "mase": 1.084,
+          "mbe": -5.203,
+          "accuracy_pct": 93.42,
+          "sample_count": 55
+        },
+        "MEA-CHIC-01": {
+          "mae": 5.592,
+          "rmse": 7.075,
+          "wape_pct": 5.29,
+          "mase": 0.723,
+          "mbe": -4.595,
+          "accuracy_pct": 94.71,
+          "sample_count": 55
+        },
+        "PAN-PAST-01": {
+          "mae": 5.822,
+          "rmse": 7.057,
+          "wape_pct": 6.6,
+          "mase": 1.044,
+          "mbe": -5.514,
+          "accuracy_pct": 93.4,
+          "sample_count": 55
+        },
+        "PAN-RICE-01": {
+          "mae": 4.482,
+          "rmse": 5.807,
+          "wape_pct": 5.26,
+          "mase": 0.844,
+          "mbe": -1.993,
+          "accuracy_pct": 94.74,
+          "sample_count": 55
+        },
+        "PAN-TRUF-01": {
+          "mae": 0.593,
+          "rmse": 0.682,
+          "wape_pct": 93.22,
+          "mase": 1.088,
+          "mbe": -0.297,
+          "accuracy_pct": 6.78,
+          "sample_count": 55
+        },
+        "PRO-BANA-01": {
+          "mae": 14.754,
+          "rmse": 17.351,
+          "wape_pct": 6.41,
+          "mase": 0.88,
+          "mbe": -10.367,
+          "accuracy_pct": 93.59,
+          "sample_count": 55
+        },
+        "PRO-SPIN-01": {
+          "mae": 12.952,
+          "rmse": 15.464,
+          "wape_pct": 5.63,
+          "mase": 1.007,
+          "mbe": -10.078,
+          "accuracy_pct": 94.37,
+          "sample_count": 55
+        },
+        "SEA-CAVI-01": {
+          "mae": 0.575,
+          "rmse": 0.67,
+          "wape_pct": 64.56,
+          "mase": 0.781,
+          "mbe": -0.248,
+          "accuracy_pct": 35.44,
+          "sample_count": 55
+        },
+        "SEA-SALM-01": {
+          "mae": 5.689,
+          "rmse": 6.739,
+          "wape_pct": 8.02,
+          "mase": 1.254,
+          "mbe": -4.915,
+          "accuracy_pct": 91.98,
+          "sample_count": 55
+        },
+        "SNA-CHIP-01": {
+          "mae": 7.455,
+          "rmse": 9.357,
+          "wape_pct": 4.58,
+          "mase": 0.689,
+          "mbe": -5.95,
+          "accuracy_pct": 95.42,
+          "sample_count": 55
+        }
+      },
+      "by_pattern": {
+        "INTERMITTENT": {
+          "mae": 0.584,
+          "rmse": 0.676,
+          "wape_pct": 76.5,
+          "mase": 0.923,
+          "mbe": -0.272,
+          "accuracy_pct": 23.5,
+          "sample_count": 110
+        },
+        "SMOOTH": {
+          "mae": 8.145,
+          "rmse": 10.515,
+          "wape_pct": 5.59,
+          "mase": 0.76,
+          "mbe": -5.509,
+          "accuracy_pct": 94.41,
+          "sample_count": 935
+        }
+      }
+    },
+    "Ridge": {
+      "overall": {
+        "mae": 7.207,
+        "rmse": 9.822,
+        "wape_pct": 5.53,
+        "mase": 0.712,
+        "mbe": 4.007,
+        "accuracy_pct": 94.47,
+        "sample_count": 1045
+      },
+      "by_sku": {
+        "BAK-CROI-01": {
+          "mae": 11.919,
+          "rmse": 14.698,
+          "wape_pct": 6.84,
+          "mase": 0.999,
+          "mbe": 6.749,
+          "accuracy_pct": 93.16,
+          "sample_count": 55
+        },
+        "BAK-SOUR-01": {
+          "mae": 9.885,
+          "rmse": 13.739,
+          "wape_pct": 5.64,
+          "mase": 1.054,
+          "mbe": 6.841,
+          "accuracy_pct": 94.36,
+          "sample_count": 55
+        },
+        "BEV-COLA-01": {
+          "mae": 8.078,
+          "rmse": 9.61,
+          "wape_pct": 4.08,
+          "mase": 0.601,
+          "mbe": 4.074,
+          "accuracy_pct": 95.92,
+          "sample_count": 55
+        },
+        "BEV-OJ-01": {
+          "mae": 7.663,
+          "rmse": 10.116,
+          "wape_pct": 3.93,
+          "mase": 0.675,
+          "mbe": 6.281,
+          "accuracy_pct": 96.07,
+          "sample_count": 55
+        },
+        "DAI-EGGS-01": {
+          "mae": 12.25,
+          "rmse": 13.95,
+          "wape_pct": 8.59,
+          "mase": 1.302,
+          "mbe": 9.567,
+          "accuracy_pct": 91.41,
+          "sample_count": 55
+        },
+        "DAI-MILK-01": {
+          "mae": 6.331,
+          "rmse": 9.371,
+          "wape_pct": 4.34,
+          "mase": 0.726,
+          "mbe": 5.734,
+          "accuracy_pct": 95.66,
+          "sample_count": 55
+        },
+        "DEL-SAND-01": {
+          "mae": 8.16,
+          "rmse": 10.074,
+          "wape_pct": 6.27,
+          "mase": 0.887,
+          "mbe": 7.447,
+          "accuracy_pct": 93.73,
+          "sample_count": 55
+        },
+        "FRO-PEAS-01": {
+          "mae": 6.474,
+          "rmse": 7.865,
+          "wape_pct": 5.57,
+          "mase": 0.832,
+          "mbe": 3.975,
+          "accuracy_pct": 94.43,
+          "sample_count": 55
+        },
+        "FRO-PIZZ-01": {
+          "mae": 9.024,
+          "rmse": 10.056,
+          "wape_pct": 7.64,
+          "mase": 1.136,
+          "mbe": 5.294,
+          "accuracy_pct": 92.36,
+          "sample_count": 55
+        },
+        "MEA-BEEF-01": {
+          "mae": 6.044,
+          "rmse": 7.128,
+          "wape_pct": 5.57,
+          "mase": 0.918,
+          "mbe": 0.446,
+          "accuracy_pct": 94.43,
+          "sample_count": 55
+        },
+        "MEA-CHIC-01": {
+          "mae": 6.218,
+          "rmse": 7.37,
+          "wape_pct": 5.89,
+          "mase": 0.804,
+          "mbe": 1.857,
+          "accuracy_pct": 94.11,
+          "sample_count": 55
+        },
+        "PAN-PAST-01": {
+          "mae": 4.574,
+          "rmse": 5.43,
+          "wape_pct": 5.19,
+          "mase": 0.82,
+          "mbe": 3.484,
+          "accuracy_pct": 94.81,
+          "sample_count": 55
+        },
+        "PAN-RICE-01": {
+          "mae": 4.987,
+          "rmse": 6.42,
+          "wape_pct": 5.85,
+          "mase": 0.939,
+          "mbe": 2.079,
+          "accuracy_pct": 94.15,
+          "sample_count": 55
+        },
+        "PAN-TRUF-01": {
+          "mae": 0.808,
+          "rmse": 0.956,
+          "wape_pct": 126.9,
+          "mase": 1.481,
+          "mbe": -0.064,
+          "accuracy_pct": 0.0,
+          "sample_count": 55
+        },
+        "PRO-BANA-01": {
+          "mae": 11.224,
+          "rmse": 15.164,
+          "wape_pct": 4.88,
+          "mase": 0.67,
+          "mbe": 4.204,
+          "accuracy_pct": 95.12,
+          "sample_count": 55
+        },
+        "PRO-SPIN-01": {
+          "mae": 10.245,
+          "rmse": 13.213,
+          "wape_pct": 4.45,
+          "mase": 0.797,
+          "mbe": 2.988,
+          "accuracy_pct": 95.55,
+          "sample_count": 55
+        },
+        "SEA-CAVI-01": {
+          "mae": 0.8,
+          "rmse": 0.992,
+          "wape_pct": 89.74,
+          "mase": 1.086,
+          "mbe": -0.708,
+          "accuracy_pct": 10.26,
+          "sample_count": 55
+        },
+        "SEA-SALM-01": {
+          "mae": 5.142,
+          "rmse": 6.142,
+          "wape_pct": 7.24,
+          "mase": 1.134,
+          "mbe": 1.286,
+          "accuracy_pct": 92.76,
+          "sample_count": 55
+        },
+        "SNA-CHIP-01": {
+          "mae": 7.107,
+          "rmse": 8.168,
+          "wape_pct": 4.37,
+          "mase": 0.656,
+          "mbe": 4.603,
+          "accuracy_pct": 95.63,
+          "sample_count": 55
+        }
+      },
+      "by_pattern": {
+        "INTERMITTENT": {
+          "mae": 0.804,
+          "rmse": 0.974,
+          "wape_pct": 105.23,
+          "mase": 1.269,
+          "mbe": -0.386,
+          "accuracy_pct": 0.0,
+          "sample_count": 110
+        },
+        "SMOOTH": {
+          "mae": 7.96,
+          "rmse": 10.379,
+          "wape_pct": 5.46,
+          "mase": 0.742,
+          "mbe": 4.524,
+          "accuracy_pct": 94.54,
+          "sample_count": 935
+        }
+      }
+    },
+    "GBDT": {
+      "overall": {
+        "mae": 7.508,
+        "rmse": 10.152,
+        "wape_pct": 5.76,
+        "mase": 0.741,
+        "mbe": 3.719,
+        "accuracy_pct": 94.24,
+        "sample_count": 1045
+      },
+      "by_sku": {
+        "BAK-CROI-01": {
+          "mae": 11.089,
+          "rmse": 13.208,
+          "wape_pct": 6.36,
+          "mase": 0.929,
+          "mbe": 5.376,
+          "accuracy_pct": 93.64,
+          "sample_count": 55
+        },
+        "BAK-SOUR-01": {
+          "mae": 10.05,
+          "rmse": 13.032,
+          "wape_pct": 5.73,
+          "mase": 1.072,
+          "mbe": 4.745,
+          "accuracy_pct": 94.27,
+          "sample_count": 55
+        },
+        "BEV-COLA-01": {
+          "mae": 9.384,
+          "rmse": 10.907,
+          "wape_pct": 4.74,
+          "mase": 0.698,
+          "mbe": 5.999,
+          "accuracy_pct": 95.26,
+          "sample_count": 55
+        },
+        "BEV-OJ-01": {
+          "mae": 11.135,
+          "rmse": 13.511,
+          "wape_pct": 5.71,
+          "mase": 0.98,
+          "mbe": 10.653,
+          "accuracy_pct": 94.29,
+          "sample_count": 55
+        },
+        "DAI-EGGS-01": {
+          "mae": 12.845,
+          "rmse": 14.758,
+          "wape_pct": 9.0,
+          "mase": 1.365,
+          "mbe": 9.634,
+          "accuracy_pct": 91.0,
+          "sample_count": 55
+        },
+        "DAI-MILK-01": {
+          "mae": 8.03,
+          "rmse": 10.098,
+          "wape_pct": 5.51,
+          "mase": 0.921,
+          "mbe": 7.838,
+          "accuracy_pct": 94.49,
+          "sample_count": 55
+        },
+        "DEL-SAND-01": {
+          "mae": 7.516,
+          "rmse": 9.144,
+          "wape_pct": 5.77,
+          "mase": 0.816,
+          "mbe": 4.578,
+          "accuracy_pct": 94.23,
+          "sample_count": 55
+        },
+        "FRO-PEAS-01": {
+          "mae": 6.71,
+          "rmse": 7.946,
+          "wape_pct": 5.78,
+          "mase": 0.862,
+          "mbe": 2.567,
+          "accuracy_pct": 94.22,
+          "sample_count": 55
+        },
+        "FRO-PIZZ-01": {
+          "mae": 7.022,
+          "rmse": 8.11,
+          "wape_pct": 5.94,
+          "mase": 0.884,
+          "mbe": 2.498,
+          "accuracy_pct": 94.06,
+          "sample_count": 55
+        },
+        "MEA-BEEF-01": {
+          "mae": 6.711,
+          "rmse": 7.986,
+          "wape_pct": 6.19,
+          "mase": 1.019,
+          "mbe": 1.248,
+          "accuracy_pct": 93.81,
+          "sample_count": 55
+        },
+        "MEA-CHIC-01": {
+          "mae": 5.984,
+          "rmse": 7.395,
+          "wape_pct": 5.66,
+          "mase": 0.773,
+          "mbe": 0.965,
+          "accuracy_pct": 94.34,
+          "sample_count": 55
+        },
+        "PAN-PAST-01": {
+          "mae": 3.858,
+          "rmse": 4.672,
+          "wape_pct": 4.37,
+          "mase": 0.692,
+          "mbe": 1.514,
+          "accuracy_pct": 95.63,
+          "sample_count": 55
+        },
+        "PAN-RICE-01": {
+          "mae": 5.544,
+          "rmse": 6.638,
+          "wape_pct": 6.51,
+          "mase": 1.044,
+          "mbe": 2.641,
+          "accuracy_pct": 93.49,
+          "sample_count": 55
+        },
+        "PAN-TRUF-01": {
+          "mae": 0.573,
+          "rmse": 0.641,
+          "wape_pct": 90.1,
+          "mase": 1.051,
+          "mbe": 0.058,
+          "accuracy_pct": 9.9,
+          "sample_count": 55
+        },
+        "PRO-BANA-01": {
+          "mae": 12.584,
+          "rmse": 16.712,
+          "wape_pct": 5.47,
+          "mase": 0.751,
+          "mbe": 4.378,
+          "accuracy_pct": 94.53,
+          "sample_count": 55
+        },
+        "PRO-SPIN-01": {
+          "mae": 11.163,
+          "rmse": 14.048,
+          "wape_pct": 4.85,
+          "mase": 0.868,
+          "mbe": 2.758,
+          "accuracy_pct": 95.15,
+          "sample_count": 55
+        },
+        "SEA-CAVI-01": {
+          "mae": 0.473,
+          "rmse": 0.581,
+          "wape_pct": 53.08,
+          "mase": 0.642,
+          "mbe": -0.17,
+          "accuracy_pct": 46.92,
+          "sample_count": 55
+        },
+        "SEA-SALM-01": {
+          "mae": 4.179,
+          "rmse": 5.122,
+          "wape_pct": 5.89,
+          "mase": 0.921,
+          "mbe": 1.113,
+          "accuracy_pct": 94.11,
+          "sample_count": 55
+        },
+        "SNA-CHIP-01": {
+          "mae": 7.795,
+          "rmse": 9.603,
+          "wape_pct": 4.79,
+          "mase": 0.72,
+          "mbe": 2.27,
+          "accuracy_pct": 95.21,
+          "sample_count": 55
+        }
+      },
+      "by_pattern": {
+        "INTERMITTENT": {
+          "mae": 0.523,
+          "rmse": 0.612,
+          "wape_pct": 68.51,
+          "mase": 0.826,
+          "mbe": -0.056,
+          "accuracy_pct": 31.49,
+          "sample_count": 110
+        },
+        "SMOOTH": {
+          "mae": 8.329,
+          "rmse": 10.731,
+          "wape_pct": 5.72,
+          "mase": 0.777,
+          "mbe": 4.163,
+          "accuracy_pct": 94.28,
+          "sample_count": 935
+        }
+      }
+    },
+    "RandomForest": {
+      "overall": {
+        "mae": 8.114,
+        "rmse": 10.981,
+        "wape_pct": 6.22,
+        "mase": 0.801,
+        "mbe": 4.775,
+        "accuracy_pct": 93.78,
+        "sample_count": 1045
+      },
+      "by_sku": {
+        "BAK-CROI-01": {
+          "mae": 12.39,
+          "rmse": 15.058,
+          "wape_pct": 7.11,
+          "mase": 1.038,
+          "mbe": 7.466,
+          "accuracy_pct": 92.89,
+          "sample_count": 55
+        },
+        "BAK-SOUR-01": {
+          "mae": 9.682,
+          "rmse": 13.467,
+          "wape_pct": 5.52,
+          "mase": 1.032,
+          "mbe": 5.909,
+          "accuracy_pct": 94.48,
+          "sample_count": 55
+        },
+        "BEV-COLA-01": {
+          "mae": 11.029,
+          "rmse": 12.798,
+          "wape_pct": 5.57,
+          "mase": 0.82,
+          "mbe": 6.818,
+          "accuracy_pct": 94.43,
+          "sample_count": 55
+        },
+        "BEV-OJ-01": {
+          "mae": 11.776,
+          "rmse": 14.303,
+          "wape_pct": 6.04,
+          "mase": 1.037,
+          "mbe": 10.893,
+          "accuracy_pct": 93.96,
+          "sample_count": 55
+        },
+        "DAI-EGGS-01": {
+          "mae": 14.447,
+          "rmse": 16.24,
+          "wape_pct": 10.13,
+          "mase": 1.535,
+          "mbe": 11.56,
+          "accuracy_pct": 89.87,
+          "sample_count": 55
+        },
+        "DAI-MILK-01": {
+          "mae": 10.586,
+          "rmse": 12.423,
+          "wape_pct": 7.26,
+          "mase": 1.214,
+          "mbe": 10.164,
+          "accuracy_pct": 92.74,
+          "sample_count": 55
+        },
+        "DEL-SAND-01": {
+          "mae": 7.819,
+          "rmse": 9.472,
+          "wape_pct": 6.01,
+          "mase": 0.849,
+          "mbe": 5.131,
+          "accuracy_pct": 93.99,
+          "sample_count": 55
+        },
+        "FRO-PEAS-01": {
+          "mae": 7.208,
+          "rmse": 8.903,
+          "wape_pct": 6.21,
+          "mase": 0.927,
+          "mbe": 5.601,
+          "accuracy_pct": 93.79,
+          "sample_count": 55
+        },
+        "FRO-PIZZ-01": {
+          "mae": 8.112,
+          "rmse": 9.316,
+          "wape_pct": 6.87,
+          "mase": 1.021,
+          "mbe": 4.004,
+          "accuracy_pct": 93.13,
+          "sample_count": 55
+        },
+        "MEA-BEEF-01": {
+          "mae": 6.294,
+          "rmse": 7.684,
+          "wape_pct": 5.8,
+          "mase": 0.956,
+          "mbe": 2.575,
+          "accuracy_pct": 94.2,
+          "sample_count": 55
+        },
+        "MEA-CHIC-01": {
+          "mae": 6.286,
+          "rmse": 7.652,
+          "wape_pct": 5.95,
+          "mase": 0.813,
+          "mbe": 3.424,
+          "accuracy_pct": 94.05,
+          "sample_count": 55
+        },
+        "PAN-PAST-01": {
+          "mae": 3.318,
+          "rmse": 4.044,
+          "wape_pct": 3.76,
+          "mase": 0.595,
+          "mbe": 0.775,
+          "accuracy_pct": 96.24,
+          "sample_count": 55
+        },
+        "PAN-RICE-01": {
+          "mae": 6.243,
+          "rmse": 7.211,
+          "wape_pct": 7.33,
+          "mase": 1.176,
+          "mbe": 3.446,
+          "accuracy_pct": 92.67,
+          "sample_count": 55
+        },
+        "PAN-TRUF-01": {
+          "mae": 0.585,
+          "rmse": 0.728,
+          "wape_pct": 92.0,
+          "mase": 1.073,
+          "mbe": -0.301,
+          "accuracy_pct": 8.0,
+          "sample_count": 55
+        },
+        "PRO-BANA-01": {
+          "mae": 13.187,
+          "rmse": 17.125,
+          "wape_pct": 5.73,
+          "mase": 0.787,
+          "mbe": 1.336,
+          "accuracy_pct": 94.27,
+          "sample_count": 55
+        },
+        "PRO-SPIN-01": {
+          "mae": 11.564,
+          "rmse": 14.725,
+          "wape_pct": 5.03,
+          "mase": 0.899,
+          "mbe": 4.832,
+          "accuracy_pct": 94.97,
+          "sample_count": 55
+        },
+        "SEA-CAVI-01": {
+          "mae": 0.535,
+          "rmse": 0.675,
+          "wape_pct": 60.05,
+          "mase": 0.726,
+          "mbe": -0.354,
+          "accuracy_pct": 39.95,
+          "sample_count": 55
+        },
+        "SEA-SALM-01": {
+          "mae": 4.058,
+          "rmse": 5.022,
+          "wape_pct": 5.72,
+          "mase": 0.895,
+          "mbe": 1.778,
+          "accuracy_pct": 94.28,
+          "sample_count": 55
+        },
+        "SNA-CHIP-01": {
+          "mae": 9.054,
+          "rmse": 10.892,
+          "wape_pct": 5.56,
+          "mase": 0.836,
+          "mbe": 5.671,
+          "accuracy_pct": 94.44,
+          "sample_count": 55
+        }
+      },
+      "by_pattern": {
+        "INTERMITTENT": {
+          "mae": 0.56,
+          "rmse": 0.702,
+          "wape_pct": 73.36,
+          "mase": 0.885,
+          "mbe": -0.327,
+          "accuracy_pct": 26.64,
+          "sample_count": 110
+        },
+        "SMOOTH": {
+          "mae": 9.003,
+          "rmse": 11.607,
+          "wape_pct": 6.18,
+          "mase": 0.84,
+          "mbe": 5.375,
+          "accuracy_pct": 93.82,
+          "sample_count": 935
+        }
+      }
+    }
+  },
+  "test_results": {
+    "Ridge": {
+      "overall": {
+        "mae": 8.027,
+        "rmse": 11.067,
+        "wape_pct": 7.03,
+        "mase": 0.793,
+        "mbe": 5.75,
+        "accuracy_pct": 92.97,
+        "sample_count": 912
+      },
+      "by_sku": {
+        "BAK-CROI-01": {
+          "mae": 14.971,
+          "rmse": 17.483,
+          "wape_pct": 10.05,
+          "mase": 1.255,
+          "mbe": 6.596,
+          "accuracy_pct": 89.95,
+          "sample_count": 48
+        },
+        "BAK-SOUR-01": {
+          "mae": 10.422,
+          "rmse": 11.941,
+          "wape_pct": 6.74,
+          "mase": 1.111,
+          "mbe": 7.893,
+          "accuracy_pct": 93.26,
+          "sample_count": 48
+        },
+        "BEV-COLA-01": {
+          "mae": 12.487,
+          "rmse": 15.881,
+          "wape_pct": 7.01,
+          "mase": 0.929,
+          "mbe": 9.837,
+          "accuracy_pct": 92.99,
+          "sample_count": 48
+        },
+        "BEV-OJ-01": {
+          "mae": 6.714,
+          "rmse": 9.211,
+          "wape_pct": 3.8,
+          "mase": 0.591,
+          "mbe": 4.729,
+          "accuracy_pct": 96.2,
+          "sample_count": 48
+        },
+        "DAI-EGGS-01": {
+          "mae": 7.629,
+          "rmse": 9.525,
+          "wape_pct": 5.99,
+          "mase": 0.811,
+          "mbe": 6.817,
+          "accuracy_pct": 94.01,
+          "sample_count": 48
+        },
+        "DAI-MILK-01": {
+          "mae": 9.932,
+          "rmse": 11.822,
+          "wape_pct": 7.73,
+          "mase": 1.139,
+          "mbe": 9.197,
+          "accuracy_pct": 92.27,
+          "sample_count": 48
+        },
+        "DEL-SAND-01": {
+          "mae": 10.485,
+          "rmse": 11.707,
+          "wape_pct": 9.39,
+          "mase": 1.139,
+          "mbe": 10.399,
+          "accuracy_pct": 90.61,
+          "sample_count": 48
+        },
+        "FRO-PEAS-01": {
+          "mae": 6.708,
+          "rmse": 8.602,
+          "wape_pct": 6.39,
+          "mase": 0.862,
+          "mbe": 3.804,
+          "accuracy_pct": 93.61,
+          "sample_count": 48
+        },
+        "FRO-PIZZ-01": {
+          "mae": 5.068,
+          "rmse": 6.528,
+          "wape_pct": 4.91,
+          "mase": 0.638,
+          "mbe": 4.782,
+          "accuracy_pct": 95.09,
+          "sample_count": 48
+        },
+        "MEA-BEEF-01": {
+          "mae": 5.61,
+          "rmse": 7.374,
+          "wape_pct": 6.03,
+          "mase": 0.852,
+          "mbe": 3.195,
+          "accuracy_pct": 93.97,
+          "sample_count": 48
+        },
+        "MEA-CHIC-01": {
+          "mae": 6.005,
+          "rmse": 7.381,
+          "wape_pct": 6.15,
+          "mase": 0.776,
+          "mbe": 2.432,
+          "accuracy_pct": 93.85,
+          "sample_count": 48
+        },
+        "PAN-PAST-01": {
+          "mae": 6.979,
+          "rmse": 9.284,
+          "wape_pct": 9.19,
+          "mase": 1.251,
+          "mbe": 5.788,
+          "accuracy_pct": 90.81,
+          "sample_count": 48
+        },
+        "PAN-RICE-01": {
+          "mae": 5.702,
+          "rmse": 7.032,
+          "wape_pct": 7.53,
+          "mase": 1.074,
+          "mbe": 3.014,
+          "accuracy_pct": 92.47,
+          "sample_count": 48
+        },
+        "PAN-TRUF-01": {
+          "mae": 0.512,
+          "rmse": 0.808,
+          "wape_pct": 116.96,
+          "mase": 0.938,
+          "mbe": -0.363,
+          "accuracy_pct": 0.0,
+          "sample_count": 48
+        },
+        "PRO-BANA-01": {
+          "mae": 15.25,
+          "rmse": 17.926,
+          "wape_pct": 7.92,
+          "mase": 0.91,
+          "mbe": 12.01,
+          "accuracy_pct": 92.08,
+          "sample_count": 48
+        },
+        "PRO-SPIN-01": {
+          "mae": 14.255,
+          "rmse": 17.762,
+          "wape_pct": 7.26,
+          "mase": 1.109,
+          "mbe": 10.056,
+          "accuracy_pct": 92.74,
+          "sample_count": 48
+        },
+        "SEA-CAVI-01": {
+          "mae": 0.499,
+          "rmse": 0.865,
+          "wape_pct": 99.78,
+          "mase": 0.677,
+          "mbe": -0.499,
+          "accuracy_pct": 0.22,
+          "sample_count": 48
+        },
+        "SEA-SALM-01": {
+          "mae": 3.263,
+          "rmse": 3.725,
+          "wape_pct": 5.13,
+          "mase": 0.72,
+          "mbe": 1.44,
+          "accuracy_pct": 94.87,
+          "sample_count": 48
+        },
+        "SNA-CHIP-01": {
+          "mae": 10.023,
+          "rmse": 12.684,
+          "wape_pct": 7.1,
+          "mase": 0.926,
+          "mbe": 8.127,
+          "accuracy_pct": 92.9,
+          "sample_count": 48
+        }
+      },
+      "by_pattern": {
+        "INTERMITTENT": {
+          "mae": 0.505,
+          "rmse": 0.837,
+          "wape_pct": 107.8,
+          "mase": 0.798,
+          "mbe": -0.431,
+          "accuracy_pct": 0.0,
+          "sample_count": 96
+        },
+        "SMOOTH": {
+          "mae": 8.912,
+          "rmse": 11.696,
+          "wape_pct": 6.98,
+          "mase": 0.831,
+          "mbe": 6.477,
+          "accuracy_pct": 93.02,
+          "sample_count": 816
+        }
+      }
+    },
+    "SeasonalNaive": {
+      "overall": {
+        "mae": 97.538,
+        "rmse": 108.56,
+        "wape_pct": 85.36,
+        "mase": 9.631,
+        "mbe": -97.53,
+        "accuracy_pct": 14.64,
+        "sample_count": 912
+      },
+      "by_sku": {
+        "BAK-CROI-01": {
+          "mae": 127.344,
+          "rmse": 128.085,
+          "wape_pct": 85.47,
+          "mase": 10.672,
+          "mbe": -127.344,
+          "accuracy_pct": 14.53,
+          "sample_count": 48
+        },
+        "BAK-SOUR-01": {
+          "mae": 131.876,
+          "rmse": 132.369,
+          "wape_pct": 85.3,
+          "mase": 14.06,
+          "mbe": -131.876,
+          "accuracy_pct": 14.7,
+          "sample_count": 48
+        },
+        "BEV-COLA-01": {
+          "mae": 151.94,
+          "rmse": 152.545,
+          "wape_pct": 85.34,
+          "mase": 11.299,
+          "mbe": -151.94,
+          "accuracy_pct": 14.66,
+          "sample_count": 48
+        },
+        "BEV-OJ-01": {
+          "mae": 151.191,
+          "rmse": 151.582,
+          "wape_pct": 85.62,
+          "mase": 13.311,
+          "mbe": -151.191,
+          "accuracy_pct": 14.38,
+          "sample_count": 48
+        },
+        "DAI-EGGS-01": {
+          "mae": 108.924,
+          "rmse": 109.32,
+          "wape_pct": 85.51,
+          "mase": 11.576,
+          "mbe": -108.924,
+          "accuracy_pct": 14.49,
+          "sample_count": 48
+        },
+        "DAI-MILK-01": {
+          "mae": 109.641,
+          "rmse": 110.045,
+          "wape_pct": 85.31,
+          "mase": 12.575,
+          "mbe": -109.641,
+          "accuracy_pct": 14.69,
+          "sample_count": 48
+        },
+        "DEL-SAND-01": {
+          "mae": 94.914,
+          "rmse": 95.18,
+          "wape_pct": 85.02,
+          "mase": 10.311,
+          "mbe": -94.914,
+          "accuracy_pct": 14.98,
+          "sample_count": 48
+        },
+        "FRO-PEAS-01": {
+          "mae": 89.904,
+          "rmse": 90.317,
+          "wape_pct": 85.62,
+          "mase": 11.556,
+          "mbe": -89.904,
+          "accuracy_pct": 14.38,
+          "sample_count": 48
+        },
+        "FRO-PIZZ-01": {
+          "mae": 88.177,
+          "rmse": 88.42,
+          "wape_pct": 85.45,
+          "mase": 11.103,
+          "mbe": -88.177,
+          "accuracy_pct": 14.55,
+          "sample_count": 48
+        },
+        "MEA-BEEF-01": {
+          "mae": 79.578,
+          "rmse": 79.85,
+          "wape_pct": 85.47,
+          "mase": 12.087,
+          "mbe": -79.578,
+          "accuracy_pct": 14.53,
+          "sample_count": 48
+        },
+        "MEA-CHIC-01": {
+          "mae": 83.578,
+          "rmse": 83.891,
+          "wape_pct": 85.65,
+          "mase": 10.804,
+          "mbe": -83.578,
+          "accuracy_pct": 14.35,
+          "sample_count": 48
+        },
+        "PAN-PAST-01": {
+          "mae": 64.637,
+          "rmse": 65.207,
+          "wape_pct": 85.09,
+          "mase": 11.587,
+          "mbe": -64.637,
+          "accuracy_pct": 14.91,
+          "sample_count": 48
+        },
+        "PAN-RICE-01": {
+          "mae": 64.513,
+          "rmse": 64.833,
+          "wape_pct": 85.19,
+          "mase": 12.15,
+          "mbe": -64.513,
+          "accuracy_pct": 14.81,
+          "sample_count": 48
+        },
+        "PAN-TRUF-01": {
+          "mae": 0.479,
+          "rmse": 0.804,
+          "wape_pct": 109.52,
+          "mase": 0.878,
+          "mbe": -0.396,
+          "accuracy_pct": 0.0,
+          "sample_count": 48
+        },
+        "PRO-BANA-01": {
+          "mae": 164.165,
+          "rmse": 164.687,
+          "wape_pct": 85.24,
+          "mase": 9.794,
+          "mbe": -164.165,
+          "accuracy_pct": 14.76,
+          "sample_count": 48
+        },
+        "PRO-SPIN-01": {
+          "mae": 167.259,
+          "rmse": 167.706,
+          "wape_pct": 85.19,
+          "mase": 13.008,
+          "mbe": -167.259,
+          "accuracy_pct": 14.81,
+          "sample_count": 48
+        },
+        "SEA-CAVI-01": {
+          "mae": 0.521,
+          "rmse": 0.854,
+          "wape_pct": 104.17,
+          "mase": 0.707,
+          "mbe": -0.438,
+          "accuracy_pct": 0.0,
+          "sample_count": 48
+        },
+        "SEA-SALM-01": {
+          "mae": 54.448,
+          "rmse": 54.597,
+          "wape_pct": 85.57,
+          "mase": 12.006,
+          "mbe": -54.448,
+          "accuracy_pct": 14.43,
+          "sample_count": 48
+        },
+        "SNA-CHIP-01": {
+          "mae": 120.143,
+          "rmse": 120.628,
+          "wape_pct": 85.12,
+          "mase": 11.098,
+          "mbe": -120.143,
+          "accuracy_pct": 14.88,
+          "sample_count": 48
+        }
+      },
+      "by_pattern": {
+        "INTERMITTENT": {
+          "mae": 0.5,
+          "rmse": 0.829,
+          "wape_pct": 106.67,
+          "mase": 0.79,
+          "mbe": -0.417,
+          "accuracy_pct": 0.0,
+          "sample_count": 96
+        },
+        "SMOOTH": {
+          "mae": 108.955,
+          "rmse": 114.768,
+          "wape_pct": 85.36,
+          "mase": 10.161,
+          "mbe": -108.955,
+          "accuracy_pct": 14.64,
+          "sample_count": 816
+        }
+      }
+    },
+    "Naive": {
+      "overall": {
+        "mae": 97.768,
+        "rmse": 108.831,
+        "wape_pct": 85.57,
+        "mase": 9.654,
+        "mbe": -97.764,
+        "accuracy_pct": 14.43,
+        "sample_count": 912
+      },
+      "by_sku": {
+        "BAK-CROI-01": {
+          "mae": 127.743,
+          "rmse": 128.355,
+          "wape_pct": 85.74,
+          "mase": 10.706,
+          "mbe": -127.743,
+          "accuracy_pct": 14.26,
+          "sample_count": 48
+        },
+        "BAK-SOUR-01": {
+          "mae": 132.252,
+          "rmse": 132.781,
+          "wape_pct": 85.55,
+          "mase": 14.1,
+          "mbe": -132.252,
+          "accuracy_pct": 14.45,
+          "sample_count": 48
+        },
+        "BEV-COLA-01": {
+          "mae": 152.264,
+          "rmse": 152.906,
+          "wape_pct": 85.53,
+          "mase": 11.323,
+          "mbe": -152.264,
+          "accuracy_pct": 14.47,
+          "sample_count": 48
+        },
+        "BEV-OJ-01": {
+          "mae": 151.359,
+          "rmse": 151.808,
+          "wape_pct": 85.71,
+          "mase": 13.326,
+          "mbe": -151.359,
+          "accuracy_pct": 14.29,
+          "sample_count": 48
+        },
+        "DAI-EGGS-01": {
+          "mae": 109.036,
+          "rmse": 109.39,
+          "wape_pct": 85.6,
+          "mase": 11.588,
+          "mbe": -109.036,
+          "accuracy_pct": 14.4,
+          "sample_count": 48
+        },
+        "DAI-MILK-01": {
+          "mae": 109.907,
+          "rmse": 110.319,
+          "wape_pct": 85.52,
+          "mase": 12.605,
+          "mbe": -109.907,
+          "accuracy_pct": 14.48,
+          "sample_count": 48
+        },
+        "DEL-SAND-01": {
+          "mae": 95.312,
+          "rmse": 95.592,
+          "wape_pct": 85.38,
+          "mase": 10.355,
+          "mbe": -95.312,
+          "accuracy_pct": 14.62,
+          "sample_count": 48
+        },
+        "FRO-PEAS-01": {
+          "mae": 89.86,
+          "rmse": 90.241,
+          "wape_pct": 85.58,
+          "mase": 11.551,
+          "mbe": -89.86,
+          "accuracy_pct": 14.42,
+          "sample_count": 48
+        },
+        "FRO-PIZZ-01": {
+          "mae": 88.426,
+          "rmse": 88.668,
+          "wape_pct": 85.69,
+          "mase": 11.134,
+          "mbe": -88.426,
+          "accuracy_pct": 14.31,
+          "sample_count": 48
+        },
+        "MEA-BEEF-01": {
+          "mae": 79.543,
+          "rmse": 79.795,
+          "wape_pct": 85.43,
+          "mase": 12.081,
+          "mbe": -79.543,
+          "accuracy_pct": 14.57,
+          "sample_count": 48
+        },
+        "MEA-CHIC-01": {
+          "mae": 83.666,
+          "rmse": 83.967,
+          "wape_pct": 85.74,
+          "mase": 10.815,
+          "mbe": -83.666,
+          "accuracy_pct": 14.26,
+          "sample_count": 48
+        },
+        "PAN-PAST-01": {
+          "mae": 64.89,
+          "rmse": 65.39,
+          "wape_pct": 85.43,
+          "mase": 11.633,
+          "mbe": -64.89,
+          "accuracy_pct": 14.57,
+          "sample_count": 48
+        },
+        "PAN-RICE-01": {
+          "mae": 64.762,
+          "rmse": 65.077,
+          "wape_pct": 85.52,
+          "mase": 12.196,
+          "mbe": -64.762,
+          "accuracy_pct": 14.48,
+          "sample_count": 48
+        },
+        "PAN-TRUF-01": {
+          "mae": 0.438,
+          "rmse": 0.777,
+          "wape_pct": 100.0,
+          "mase": 0.802,
+          "mbe": -0.396,
+          "accuracy_pct": 0.0,
+          "sample_count": 48
+        },
+        "PRO-BANA-01": {
+          "mae": 164.515,
+          "rmse": 165.074,
+          "wape_pct": 85.42,
+          "mase": 9.814,
+          "mbe": -164.515,
+          "accuracy_pct": 14.58,
+          "sample_count": 48
+        },
+        "PRO-SPIN-01": {
+          "mae": 167.925,
+          "rmse": 168.425,
+          "wape_pct": 85.53,
+          "mase": 13.06,
+          "mbe": -167.925,
+          "accuracy_pct": 14.47,
+          "sample_count": 48
+        },
+        "SEA-CAVI-01": {
+          "mae": 0.479,
+          "rmse": 0.829,
+          "wape_pct": 95.83,
+          "mase": 0.651,
+          "mbe": -0.438,
+          "accuracy_pct": 4.17,
+          "sample_count": 48
+        },
+        "SEA-SALM-01": {
+          "mae": 54.513,
+          "rmse": 54.66,
+          "wape_pct": 85.67,
+          "mase": 12.021,
+          "mbe": -54.513,
+          "accuracy_pct": 14.33,
+          "sample_count": 48
+        },
+        "SNA-CHIP-01": {
+          "mae": 120.701,
+          "rmse": 121.224,
+          "wape_pct": 85.51,
+          "mase": 11.149,
+          "mbe": -120.701,
+          "accuracy_pct": 14.49,
+          "sample_count": 48
+        }
+      },
+      "by_pattern": {
+        "INTERMITTENT": {
+          "mae": 0.458,
+          "rmse": 0.804,
+          "wape_pct": 97.78,
+          "mase": 0.724,
+          "mbe": -0.417,
+          "accuracy_pct": 2.22,
+          "sample_count": 96
+        },
+        "SMOOTH": {
+          "mae": 109.216,
+          "rmse": 115.055,
+          "wape_pct": 85.56,
+          "mase": 10.186,
+          "mbe": -109.216,
+          "accuracy_pct": 14.44,
+          "sample_count": 816
+        }
+      }
+    }
+  },
+  "selected_model": "Ridge",
+  "selection_rationale": "Selected 'Ridge' based on superior Validation WAPE of 5.53% (vs Seasonal Naive 85.53%, relative error reduction of 93.5%). Validation MASE: 0.712 (< 1.0 threshold)."
+}
