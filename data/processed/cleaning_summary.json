@@ -1,0 +1,41 @@
+{
+  "cleaned_at": "2026-10-24T09:37:01.743136",
+  "raw_records": 8617,
+  "retained_records": 8616,
+  "dropped_records": 1,
+  "duplicates_removed": 1,
+  "missing_timestamps_resolved": 3,
+  "missing_skus_dropped": 0,
+  "units_converted": 2,
+  "signs_corrected": 1,
+  "math_reconciled": 1,
+  "negative_prices_flagged": 0,
+  "outliers_tagged": 0,
+  "modifications": [
+    {
+      "rule": "DEDUPLICATE_TRANSACTION_ID",
+      "count": 1,
+      "reason": "Retained earliest occurrence of duplicated transaction IDs."
+    },
+    {
+      "rule": "IMPUTE_MISSING_TIMESTAMP",
+      "count": 3,
+      "reason": "Imputed missing transaction timestamps from chronological sequence context."
+    },
+    {
+      "rule": "NORMALIZE_MEASUREMENT_UNITS",
+      "count": 2,
+      "reason": "Converted vendor units (lbs, oz, fl_oz) to platform canonical units (kg, g, liters)."
+    },
+    {
+      "rule": "ENFORCE_QUANTITY_SIGNS",
+      "count": 1,
+      "reason": "Enforced negative deltas on outflows and positive deltas on inflows."
+    },
+    {
+      "rule": "RECONCILE_LEDGER_MATH",
+      "count": 1,
+      "reason": "Recomputed quantity_after = quantity_before + quantity_change."
+    }
+  ]
+}
