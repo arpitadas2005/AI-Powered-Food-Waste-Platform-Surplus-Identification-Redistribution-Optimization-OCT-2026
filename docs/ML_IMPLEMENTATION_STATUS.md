@@ -2,9 +2,9 @@
 
 **Project**: AI-Powered Food Waste Management Platform for Surplus Identification and Redistribution Optimization  
 **Milestone**: 2 — Machine Learning Demand Forecasting & Food Waste Prediction  
-**Phase**: Phase 3 — Forecasting Model Development, Training & Evaluation  
-**Date**: October 24, 2026  
-**Status**: **PHASE 3 COMPLETE (Ready for Review & Approval)**  
+**Phase**: Phase 4 — Waste Risk Scoring, Smart Reorder Recommendations & Forecast API Integration  
+**Date**: October 25, 2026  
+**Status**: **PHASE 4 COMPLETE (Verified & Ready for Milestone Acceptance)**  
 
 ---
 
@@ -17,13 +17,27 @@ Milestone 2 advances the platform from inventory tracking and expiry monitoring 
 | **Phase 1** | **Dataset Audit, Raw Data Profiling & ML Pipeline Design** | **COMPLETE** | Audited repository, generated 365-day benchmark dataset, built reproducible profiling pipeline, designed zero-leakage feature engineering, created baseline specs and risk formulas. All 8 tests passing. |
 | **Phase 2** | **Data Cleaning, Preprocessing & Feature Engineering** | **COMPLETE** | Ingested and cleaned raw transactional and daily datasets, constructed unbroken calendar grids, engineered 27 leakage-free predictive features, generated multi-horizon targets, partitioned chronologically (70/15/15), isolated scalers on Train split, and verified zero lookahead leakage. 12 automated tests passing. |
 | **Phase 3** | **Forecasting Model Development, Training & Evaluation** | **COMPLETE** | Implemented Baselines (Naive, Seasonal Naive, MA, Mean) and candidate ML models (Ridge, GBDT, Random Forest). Validated on 15% validation split: Random Forest champion for 1-day ahead (12.94% Val WAPE, 15.05% Test WAPE, 40% error reduction over baseline), Ridge champion for 7-day cumulative demand (5.53% Val WAPE, 7.03% Test WAPE). Authored 11 automated tests (31/31 ML tests passing, 98/98 total). |
-| **Phase 4** | **Waste Risk Scoring, Smart Reorder Recommendations & Forecast API Integration** | *PENDING APPROVAL* | Implement waste risk scoring combining inventory batches with forecast demand; build smart purchase replenishment orders; expose REST endpoints (`/api/v1/forecasts/*`, `/api/v1/waste-risk/*`). |
-| **Phase 5** | **Surplus Marketplace & Food Bank Donation Dispatcher** | *PLANNED* | Integrate automated donation generation and discount listing workflows. |
-| **Phase 6** | **MLOps, Drift Monitoring & Performance Benchmarks** | *PLANNED* | Automated data drift monitoring, concept drift detection, and sub-20ms inference latency benchmarks. |
+| **Phase 4** | **Waste Risk Scoring, Smart Reorder Recommendations & Forecast API Integration** | **COMPLETE** | Built modular Waste-Risk Scoring Engine with 4 explainable risk tiers (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`); built Smart Replenishment Engine with safety stock ($Z=1.65$) and expiry-risk suppression guard; created persistence models and Alembic migration; exposed FastAPI REST endpoints under `/forecasts` and `/waste-risk` with strict multi-tenant isolation; built `BatchPredictionJob` and CLI runner. 12 new automated tests passing (43/43 ML tests passing, 121/121 total project tests passing, 100%). |
+| **Phase 5** | **Surplus Marketplace & Food Bank Donation Dispatcher** | *NEXT MILESTONE* | Milestone 3 scope: Marketplace listings, NGO matching, and redistribution logistics. |
 
 ---
 
-## 2. Phase 3 Verification Matrix
+## 2. Phase 4 Verification Matrix
+
+| Requirement | Description | Status | Evidence / Artifacts |
+| :--- | :--- | :---: | :--- |
+| **M2-P4-REQ-1** | Model Inference Service & Fallback | **PASS** | Implemented [`backend/app/ml/inference_service.py`](file:///D:/Waste%20management/backend/app/ml/inference_service.py). Caches champion models (`RandomForest` for 1-day, `Ridge` for 7-day). Features fallback to `SeasonalNaive` if models are offline. Zero-latency SKU feature lookup. Health probe endpoint. |
+| **M2-P4-REQ-2** | Waste-Risk Assessment Engine | **PASS** | Implemented [`backend/app/ml/waste_risk_service.py`](file:///D:/Waste%20management/backend/app/ml/waste_risk_service.py). Subtracts active surplus reservations (`AVAILABLE`, `RESERVED`, `CLAIMED`), calculates expected surplus, surplus ratio, value-at-risk, and 4 explainable risk tiers (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`). Documented in [`docs/WASTE_RISK_SCORING.md`](file:///D:/Waste%20management/docs/WASTE_RISK_SCORING.md). |
+| **M2-P4-REQ-3** | Smart Replenishment & Reorders | **PASS** | Implemented [`backend/app/ml/smart_reorder_service.py`](file:///D:/Waste%20management/backend/app/ml/smart_reorder_service.py). Calculates lead-time demand, dynamic safety stock ($Z=1.65$), storage caps, and **Expiry Risk Suppression Guard** (blocks replenishment orders when item has `HIGH` or `CRITICAL` risk). Documented in [`docs/SMART_REORDER_ENGINE.md`](file:///D:/Waste%20management/docs/SMART_REORDER_ENGINE.md). |
+| **M2-P4-REQ-4** | Persistence Models & Alembic Migration | **PASS** | Created `WasteRiskAssessmentRecord` and `SmartReorderRecord` in [`backend/app/models/waste_risk.py`](file:///D:/Waste%20management/backend/app/models/waste_risk.py). Applied Alembic migration `671449d6bca3_create_waste_risk_and_smart_reorder_.py`. |
+| **M2-P4-REQ-5** | Forecast & Waste-Risk REST Endpoints | **PASS** | Created [`backend/app/api/v1/forecasts.py`](file:///D:/Waste%20management/backend/app/api/v1/forecasts.py) and [`backend/app/api/v1/waste_risk.py`](file:///D:/Waste%20management/backend/app/api/v1/waste_risk.py). Mounted in [`backend/app/api/v1/api.py`](file:///D:/Waste%20management/backend/app/api/v1/api.py). Fully typed Pydantic schemas in [`backend/app/schemas/forecast.py`](file:///D:/Waste%20management/backend/app/schemas/forecast.py). Documented in [`docs/FORECAST_API_CONTRACT.md`](file:///D:/Waste%20management/docs/FORECAST_API_CONTRACT.md). |
+| **M2-P4-REQ-6** | Strict Multi-Tenant Isolation | **PASS** | Verified via test suite: cross-tenant access to another tenant's SKU or inventory item returns `404 NOT FOUND`. |
+| **M2-P4-REQ-7** | Scheduled Batch Prediction Runner | **PASS** | Implemented [`backend/app/ml/batch_job.py`](file:///D:/Waste%20management/backend/app/ml/batch_job.py) and CLI runner [`scripts/run_batch_waste_risk_eval.py`](file:///D:/Waste%20management/scripts/run_batch_waste_risk_eval.py). Documented deployment patterns in [`docs/BATCH_PREDICTION_OPERATIONS.md`](file:///D:/Waste%20management/docs/BATCH_PREDICTION_OPERATIONS.md). |
+| **M2-P4-REQ-8** | Automated Testing & Full Regression | **PASS** | Authored 12 automated unit/integration tests in [`backend/tests/test_waste_risk_and_forecast_api.py`](file:///D:/Waste%20management/backend/tests/test_waste_risk_and_forecast_api.py). 100% passing (12/12 Phase 4 tests, 43/43 ML tests, **121/121 total project tests**). |
+
+---
+
+## 3. Phase 3 Verification Matrix
 
 | Requirement | Description | Status | Evidence / Artifacts |
 | :--- | :--- | :---: | :--- |
@@ -38,7 +52,7 @@ Milestone 2 advances the platform from inventory tracking and expiry monitoring 
 
 ---
 
-## 2. Phase 2 Verification Matrix
+## 4. Phase 2 Verification Matrix
 
 | Requirement | Description | Status | Evidence / Artifacts |
 | :--- | :--- | :---: | :--- |
@@ -53,7 +67,7 @@ Milestone 2 advances the platform from inventory tracking and expiry monitoring 
 
 ---
 
-## 2. Phase 1 Verification Matrix
+## 5. Phase 1 Verification Matrix
 
 | Requirement | Description | Status | Evidence / Artifacts |
 | :--- | :--- | :---: | :--- |
@@ -65,26 +79,3 @@ Milestone 2 advances the platform from inventory tracking and expiry monitoring 
 | **M2-P1-REQ-6** | Baseline Specs & Robust Metrics | **PASS** | Implemented Naive, Seasonal Naive, Moving Average, and metrics (MAE, RMSE, WAPE, MASE) in `baselines.py` and [`docs/ML_EVALUATION_PLAN.md`](file:///D:/Waste%20management/docs/ML_EVALUATION_PLAN.md). |
 | **M2-P1-REQ-7** | Waste Risk & Reorder Formulation | **PASS** | Implemented explainable expected surplus, surplus ratio, value-at-risk, and statistical reorder point formulas in `waste_risk.py`. |
 | **M2-P1-REQ-8** | Automated Testing | **PASS** | Authored 8 automated tests in `backend/tests/test_ml_pipeline_design.py`. Full test suite: **86 / 86 tests passing (100%)**. |
-
----
-
-## 3. Files Created and Modified
-
-- **Machine Learning Domain Code**:
-  - [`backend/app/ml/__init__.py`](file:///D:/Waste%20management/backend/app/ml/__init__.py): ML package entrypoint.
-  - [`backend/app/ml/dataset_generator.py`](file:///D:/Waste%20management/backend/app/ml/dataset_generator.py): Reproducible synthetic operational supermarket history generator.
-  - [`backend/app/ml/data_profiler.py`](file:///D:/Waste%20management/backend/app/ml/data_profiler.py): Automated data profiling, quality checks, and Syntetos-Boylan demand classifier.
-  - [`backend/app/ml/preprocessing.py`](file:///D:/Waste%20management/backend/app/ml/preprocessing.py): Leakage-free feature engineering, unit normalization, and chronological splitter.
-  - [`backend/app/ml/baselines.py`](file:///D:/Waste%20management/backend/app/ml/baselines.py): Statistical forecasting baselines and WAPE/MASE evaluation metrics.
-  - [`backend/app/ml/waste_risk.py`](file:///D:/Waste%20management/backend/app/ml/waste_risk.py): Explainable waste risk assessment and statistical replenishment calculations.
-- **Automated Test Suite**:
-  - [`backend/tests/test_ml_pipeline_design.py`](file:///D:/Waste%20management/backend/tests/test_ml_pipeline_design.py): 8 comprehensive unit and integration tests.
-- **Dependencies**:
-  - [`backend/requirements.txt`](file:///D:/Waste%20management/backend/requirements.txt): Added `pandas>=2.2.0`, `numpy>=1.26.0`, `scikit-learn>=1.5.0`.
-- **Documentation Deliverables**:
-  - [`docs/ML_DATASET_INVENTORY.md`](file:///D:/Waste%20management/docs/ML_DATASET_INVENTORY.md)
-  - [`docs/DATA_QUALITY_REPORT.md`](file:///D:/Waste%20management/docs/DATA_QUALITY_REPORT.md)
-  - [`docs/FORECASTING_PROBLEM_DEFINITION.md`](file:///D:/Waste%20management/docs/FORECASTING_PROBLEM_DEFINITION.md)
-  - [`docs/ML_PREPROCESSING_DESIGN.md`](file:///D:/Waste%20management/docs/ML_PREPROCESSING_DESIGN.md)
-  - [`docs/ML_EVALUATION_PLAN.md`](file:///D:/Waste%20management/docs/ML_EVALUATION_PLAN.md)
-  - [`docs/ML_IMPLEMENTATION_STATUS.md`](file:///D:/Waste%20management/docs/ML_IMPLEMENTATION_STATUS.md)

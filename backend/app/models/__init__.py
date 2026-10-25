@@ -19,6 +19,12 @@ from backend.app.models.csv_import import (
 from backend.app.models.pos import PosIntegration, PosProvider
 from backend.app.models.surplus import SurplusListing, SurplusStatus
 from backend.app.models.audit import AuditEvent, AuditEventType
+from backend.app.models.waste_risk import (
+    WasteRiskAssessmentRecord,
+    RiskTier,
+    SmartReorderRecord,
+    ReorderStatus,
+)
 
 __all__ = [
     "Tenant",
@@ -47,4 +53,8 @@ __all__ = [
     "SurplusStatus",
     "AuditEvent",
     "AuditEventType",
+    "WasteRiskAssessmentRecord",
+    "RiskTier",
+    "SmartReorderRecord",
+    "ReorderStatus",
 ]
