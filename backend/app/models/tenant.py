@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from backend.app.models.transaction import StockTransaction
     from backend.app.models.alert import TenantAlertConfig, ExpiryAlertHistory
     from backend.app.models.pos import PosIntegration
-    from backend.app.models.surplus import SurplusListing
+    from backend.app.models.surplus import SurplusListing, NgoProfile, SurplusClaim
 
 
 class BusinessType(str, Enum):
@@ -51,3 +51,5 @@ class Tenant(Base, TimestampMixin):
     alert_history: Mapped[List["ExpiryAlertHistory"]] = relationship("ExpiryAlertHistory", back_populates="tenant", cascade="all, delete-orphan")
     pos_integrations: Mapped[List["PosIntegration"]] = relationship("PosIntegration", back_populates="tenant", cascade="all, delete-orphan")
     surplus_listings: Mapped[List["SurplusListing"]] = relationship("SurplusListing", foreign_keys="SurplusListing.tenant_id", back_populates="tenant", cascade="all, delete-orphan")
+    ngo_profile: Mapped["NgoProfile | None"] = relationship("NgoProfile", back_populates="tenant", uselist=False, cascade="all, delete-orphan")
+    claimed_surplus: Mapped[List["SurplusClaim"]] = relationship("SurplusClaim", foreign_keys="SurplusClaim.ngo_tenant_id", back_populates="ngo_tenant", cascade="all, delete-orphan")

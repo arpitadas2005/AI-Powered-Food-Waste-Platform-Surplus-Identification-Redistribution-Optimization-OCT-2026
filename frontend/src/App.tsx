@@ -6,6 +6,7 @@ import { BarcodeScanner } from './components/BarcodeScanner';
 import { ExpiryAlertsView } from './components/ExpiryAlertsView';
 import { CsvImportView } from './components/CsvImportView';
 import { PosIntegrationsView } from './components/PosIntegrationsView';
+import { SurplusView } from './components/SurplusView';
 import { ItemFormModal } from './components/ItemFormModal';
 import { ItemDetailsModal } from './components/ItemDetailsModal';
 import { InventoryItem } from './types';
@@ -28,9 +29,12 @@ export const App: React.FC = () => {
     if (tenantSlug === 'green-grocer-downtown') {
       localStorage.setItem('test_tenant_id', 'tenant_a_green_grocer');
       localStorage.setItem('test_user_id', 'user_a_owner');
-    } else {
+    } else if (tenantSlug === 'artisan-bakery-uptown') {
       localStorage.setItem('test_tenant_id', 'tenant_b_artisan_bakery');
       localStorage.setItem('test_user_id', 'user_b_owner');
+    } else if (tenantSlug === 'community-food-bank') {
+      localStorage.setItem('test_tenant_id', 'tenant_ngo_community_pantry');
+      localStorage.setItem('test_user_id', 'user_ngo_director');
     }
     setRefreshKey((k) => k + 1);
   }, [tenantSlug]);
@@ -63,6 +67,20 @@ export const App: React.FC = () => {
       <main className="main-content" key={refreshKey}>
         {activeTab === 'dashboard' && (
           <DashboardView
+            tenantSlug={tenantSlug}
+            initialSection={tenantSlug === 'community-food-bank' ? 'ngo' : 'business'}
+            onNavigate={(tab) => setActiveTab(tab)}
+            onOpenCreateItem={() => {
+              setItemToEdit(null);
+              setShowItemForm(true);
+            }}
+          />
+        )}
+
+        {activeTab === 'analytics' && (
+          <DashboardView
+            tenantSlug={tenantSlug}
+            initialSection="sustainability"
             onNavigate={(tab) => setActiveTab(tab)}
             onOpenCreateItem={() => {
               setItemToEdit(null);
@@ -97,6 +115,8 @@ export const App: React.FC = () => {
         {activeTab === 'csv' && <CsvImportView />}
 
         {activeTab === 'pos' && <PosIntegrationsView />}
+
+        {activeTab === 'surplus' && <SurplusView />}
       </main>
 
       {/* Item Create / Edit Modal */}

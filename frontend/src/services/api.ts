@@ -4,22 +4,37 @@
  */
 
 import {
+  BusinessDashboardSummary,
   CategorySummary,
   CsvImportResponse,
   ExpiryAlertHistory,
   ExpiryEvaluationResponse,
   InventoryItem,
   InventoryItemCreatePayload,
+  NgoDashboardSummary,
+  NgoMatchRecommendation,
+  NgoProfile,
   PaginatedResponse,
+  PickupSchedule,
+  PickupScheduleCreatePayload,
+  PickupScheduleReschedulePayload,
   PosIntegration,
   PosSyncResponse,
   StockAdjustmentPayload,
   StockTransaction,
   SuccessEnvelope,
+  SurplusClaim,
+  SurplusClaimCreatePayload,
+  SurplusListing,
+  SurplusListingCreatePayload,
+  SurplusMatchesResponse,
+  SurplusNotification,
+  SustainabilityMetrics,
   TenantAlertConfig,
+  TimeSeriesResponse,
 } from '../types';
 
-const API_BASE = '/api/v1';
+const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || '/api/v1';
 
 // Token Management
 export const getStoredToken = (): string => {
@@ -282,5 +297,340 @@ export const api = {
     });
     const json: SuccessEnvelope<PosSyncResponse> = await handleResponse(res);
     return json.data;
+  },
+
+  // 8. Surplus Listings & NGO Matching
+  async listSurplusListings(params: {
+    page?: number;
+    size?: number;
+    status?: string;
+    category_id?: string;
+    storage_requirement?: string;
+    min_days_to_expiry?: number;
+  } = {}): Promise<PaginatedResponse<SurplusListing>> {
+    const query = new URLSearchParams();
+    if (params.page) query.append('page', params.page.toString());
+    if (params.size) query.append('size', params.size.toString());
+    if (params.status) query.append('status', params.status);
+    if (params.category_id) query.append('category_id', params.category_id);
+    if (params.storage_requirement) query.append('storage_requirement', params.storage_requirement);
+    if (params.min_days_to_expiry) query.append('min_days_to_expiry', params.min_days_to_expiry.toString());
+
+    const res = await fetch(`${API_BASE}/surplus/listings?${query.toString()}`, {
+      headers: getAuthHeaders(),
+    });
+    return await handleResponse(res);
+  },
+
+  async getSurplusListing(id: string): Promise<SurplusListing> {
+    const res = await fetch(`${API_BASE}/surplus/listings/${id}`, {
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<SurplusListing> = await handleResponse(res);
+    return json.data;
+  },
+
+  async createSurplusListing(payload: SurplusListingCreatePayload): Promise<SurplusListing> {
+    const res = await fetch(`${API_BASE}/surplus/listings`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(payload),
+    });
+    const json: SuccessEnvelope<SurplusListing> = await handleResponse(res);
+    return json.data;
+  },
+
+  async updateSurplusListing(
+    id: string,
+    payload: Partial<SurplusListingCreatePayload>
+  ): Promise<SurplusListing> {
+    const res = await fetch(`${API_BASE}/surplus/listings/${id}`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(payload),
+    });
+    const json: SuccessEnvelope<SurplusListing> = await handleResponse(res);
+    return json.data;
+  },
+
+  async cancelSurplusListing(id: string, reason?: string): Promise<SurplusListing> {
+    const query = reason ? `?reason=${encodeURIComponent(reason)}` : '';
+    const res = await fetch(`${API_BASE}/surplus/listings/${id}/cancel${query}`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<SurplusListing> = await handleResponse(res);
+    return json.data;
+  },
+
+  async getNgoMatchesForListing(
+    listingId: string,
+    originLat?: number,
+    originLon?: number
+  ): Promise<SurplusMatchesResponse> {
+    const query = new URLSearchParams();
+    if (originLat !== undefined && originLat !== null) query.append('origin_lat', originLat.toString());
+    if (originLon !== undefined && originLon !== null) query.append('origin_lon', originLon.toString());
+
+    const res = await fetch(`${API_BASE}/surplus/listings/${listingId}/matches?${query.toString()}`, {
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<SurplusMatchesResponse> = await handleResponse(res);
+    return json.data;
+  },
+
+  // Claims
+  async createSurplusClaim(payload: SurplusClaimCreatePayload): Promise<SurplusClaim> {
+    const res = await fetch(`${API_BASE}/surplus/claims`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(payload),
+    });
+    const json: SuccessEnvelope<SurplusClaim> = await handleResponse(res);
+    return json.data;
+  },
+
+  async getMyClaims(status?: string): Promise<SurplusClaim[]> {
+    const query = status ? `?status=${encodeURIComponent(status)}` : '';
+    const res = await fetch(`${API_BASE}/surplus/claims/my${query}`, {
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<SurplusClaim[]> = await handleResponse(res);
+    return json.data;
+  },
+
+  async getListingClaims(listingId: string): Promise<SurplusClaim[]> {
+    const res = await fetch(`${API_BASE}/surplus/listings/${listingId}/claims`, {
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<SurplusClaim[]> = await handleResponse(res);
+    return json.data;
+  },
+
+  async reviewClaim(
+    claimId: string,
+    action: 'APPROVE' | 'REJECT',
+    rejectionReason?: string
+  ): Promise<SurplusClaim> {
+    const res = await fetch(`${API_BASE}/surplus/claims/${claimId}/review`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ action, rejection_reason: rejectionReason }),
+    });
+    const json: SuccessEnvelope<SurplusClaim> = await handleResponse(res);
+    return json.data;
+  },
+
+  async completeClaimTransfer(claimId: string): Promise<SurplusClaim> {
+    const res = await fetch(`${API_BASE}/surplus/claims/${claimId}/complete`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<SurplusClaim> = await handleResponse(res);
+    return json.data;
+  },
+
+  async cancelClaim(claimId: string, reason?: string): Promise<SurplusClaim> {
+    const query = reason ? `?reason=${encodeURIComponent(reason)}` : '';
+    const res = await fetch(`${API_BASE}/surplus/claims/${claimId}/cancel${query}`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<SurplusClaim> = await handleResponse(res);
+    return json.data;
+  },
+
+  // NGO Profile
+  async getNgoProfile(): Promise<NgoProfile> {
+    const res = await fetch(`${API_BASE}/surplus/ngo/profile`, {
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<NgoProfile> = await handleResponse(res);
+    return json.data;
+  },
+
+  async updateNgoProfile(payload: Partial<NgoProfile>): Promise<NgoProfile> {
+    const res = await fetch(`${API_BASE}/surplus/ngo/profile`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(payload),
+    });
+    const json: SuccessEnvelope<NgoProfile> = await handleResponse(res);
+    return json.data;
+  },
+
+  // Notifications
+  async getSurplusNotifications(unreadOnly = false): Promise<SurplusNotification[]> {
+    const res = await fetch(`${API_BASE}/surplus/notifications?unread_only=${unreadOnly}`, {
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<SurplusNotification[]> = await handleResponse(res);
+    return json.data;
+  },
+
+  async markNotificationRead(id: string): Promise<boolean> {
+    const res = await fetch(`${API_BASE}/surplus/notifications/${id}/read`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<boolean> = await handleResponse(res);
+    return json.data;
+  },
+
+  async markAllNotificationsRead(): Promise<number> {
+    const res = await fetch(`${API_BASE}/surplus/notifications/read-all`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<number> = await handleResponse(res);
+    return json.data;
+  },
+
+  // 9. Pickup Logistics & Scheduling
+  async schedulePickup(claimId: string, payload: PickupScheduleCreatePayload): Promise<PickupSchedule> {
+    const res = await fetch(`${API_BASE}/surplus/claims/${claimId}/schedule`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(payload),
+    });
+    const json: SuccessEnvelope<PickupSchedule> = await handleResponse(res);
+    return json.data;
+  },
+
+  async reschedulePickup(claimId: string, payload: PickupScheduleReschedulePayload): Promise<PickupSchedule> {
+    const res = await fetch(`${API_BASE}/surplus/claims/${claimId}/reschedule`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(payload),
+    });
+    const json: SuccessEnvelope<PickupSchedule> = await handleResponse(res);
+    return json.data;
+  },
+
+  async markPickupReady(claimId: string): Promise<PickupSchedule> {
+    const res = await fetch(`${API_BASE}/surplus/claims/${claimId}/ready`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<PickupSchedule> = await handleResponse(res);
+    return json.data;
+  },
+
+  async confirmPickupCollection(claimId: string): Promise<PickupSchedule> {
+    const res = await fetch(`${API_BASE}/surplus/claims/${claimId}/collect`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<PickupSchedule> = await handleResponse(res);
+    return json.data;
+  },
+
+  async markPickupMissed(claimId: string, reason?: string): Promise<PickupSchedule> {
+    const query = reason ? `?reason=${encodeURIComponent(reason)}` : '';
+    const res = await fetch(`${API_BASE}/surplus/claims/${claimId}/missed${query}`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<PickupSchedule> = await handleResponse(res);
+    return json.data;
+  },
+
+  async getClaimPickupSchedule(claimId: string): Promise<PickupSchedule> {
+    const res = await fetch(`${API_BASE}/surplus/claims/${claimId}/schedule`, {
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<PickupSchedule> = await handleResponse(res);
+    return json.data;
+  },
+
+  async listPickups(params: {
+    status?: string;
+    date_from?: string;
+    date_to?: string;
+    page?: number;
+    size?: number;
+  } = {}): Promise<PaginatedResponse<PickupSchedule>> {
+    const query = new URLSearchParams();
+    if (params.status) query.append('status', params.status);
+    if (params.date_from) query.append('date_from', params.date_from);
+    if (params.date_to) query.append('date_to', params.date_to);
+    if (params.page) query.append('page', params.page.toString());
+    if (params.size) query.append('size', params.size.toString());
+
+    const res = await fetch(`${API_BASE}/surplus/pickups?${query.toString()}`, {
+      headers: getAuthHeaders(),
+    });
+    return await handleResponse(res);
+  },
+
+  // ---------------------------------------------------------------------------
+  // Milestone 3 Phase 3: Analytics & Dashboards
+  // ---------------------------------------------------------------------------
+
+  async getBusinessDashboardSummary(): Promise<BusinessDashboardSummary> {
+    const res = await fetch(`${API_BASE}/analytics/business/summary`, {
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<BusinessDashboardSummary> = await handleResponse(res);
+    return json.data;
+  },
+
+  async getNgoDashboardSummary(): Promise<NgoDashboardSummary> {
+    const res = await fetch(`${API_BASE}/analytics/ngo/summary`, {
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<NgoDashboardSummary> = await handleResponse(res);
+    return json.data;
+  },
+
+  async getSustainabilityMetrics(params: {
+    date_from?: string;
+    date_to?: string;
+    tenant_id?: string;
+  } = {}): Promise<SustainabilityMetrics> {
+    const query = new URLSearchParams();
+    if (params.date_from) query.append('date_from', params.date_from);
+    if (params.date_to) query.append('date_to', params.date_to);
+    if (params.tenant_id) query.append('tenant_id', params.tenant_id);
+
+    const res = await fetch(`${API_BASE}/analytics/sustainability?${query.toString()}`, {
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<SustainabilityMetrics> = await handleResponse(res);
+    return json.data;
+  },
+
+  async getTimeSeriesAnalytics(params: {
+    date_from?: string;
+    date_to?: string;
+    interval?: string;
+  } = {}): Promise<TimeSeriesResponse> {
+    const query = new URLSearchParams();
+    if (params.date_from) query.append('date_from', params.date_from);
+    if (params.date_to) query.append('date_to', params.date_to);
+    if (params.interval) query.append('interval', params.interval);
+
+    const res = await fetch(`${API_BASE}/analytics/time-series?${query.toString()}`, {
+      headers: getAuthHeaders(),
+    });
+    const json: SuccessEnvelope<TimeSeriesResponse> = await handleResponse(res);
+    return json.data;
+  },
+
+  async exportSustainabilityCsv(params: {
+    date_from?: string;
+    date_to?: string;
+  } = {}): Promise<Blob> {
+    const query = new URLSearchParams();
+    if (params.date_from) query.append('date_from', params.date_from);
+    if (params.date_to) query.append('date_to', params.date_to);
+
+    const res = await fetch(`${API_BASE}/analytics/export/csv?${query.toString()}`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) {
+      throw new Error(`CSV export failed: ${res.statusText}`);
+    }
+    return await res.blob();
   },
 };

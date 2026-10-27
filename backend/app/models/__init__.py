@@ -17,7 +17,17 @@ from backend.app.models.csv_import import (
     CsvImportStatus,
 )
 from backend.app.models.pos import PosIntegration, PosProvider
-from backend.app.models.surplus import SurplusListing, SurplusStatus
+from backend.app.models.surplus import (
+    SurplusListing,
+    SurplusStatus,
+    NgoProfile,
+    OrganizationType,
+    SurplusClaim,
+    ClaimStatus,
+    PickupSchedule,
+    PickupScheduleStatus,
+    SurplusNotification,
+)
 from backend.app.models.audit import AuditEvent, AuditEventType
 from backend.app.models.waste_risk import (
     WasteRiskAssessmentRecord,
@@ -51,6 +61,13 @@ __all__ = [
     "PosProvider",
     "SurplusListing",
     "SurplusStatus",
+    "NgoProfile",
+    "OrganizationType",
+    "SurplusClaim",
+    "ClaimStatus",
+    "PickupSchedule",
+    "PickupScheduleStatus",
+    "SurplusNotification",
     "AuditEvent",
     "AuditEventType",
     "WasteRiskAssessmentRecord",

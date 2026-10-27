@@ -8,9 +8,19 @@ import {
   Layers,
   Building2,
   RefreshCw,
+  HeartHandshake,
+  BarChart3,
 } from 'lucide-react';
 
-export type ActiveTab = 'dashboard' | 'inventory' | 'scanner' | 'expiry' | 'csv' | 'pos';
+export type ActiveTab =
+  | 'dashboard'
+  | 'inventory'
+  | 'scanner'
+  | 'expiry'
+  | 'csv'
+  | 'pos'
+  | 'surplus'
+  | 'analytics';
 
 interface NavigationProps {
   activeTab: ActiveTab;
@@ -58,6 +68,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             >
               <option value="green-grocer-downtown">Green Grocer (Tenant A)</option>
               <option value="artisan-bakery-uptown">Artisan Bakery (Tenant B)</option>
+              <option value="community-food-bank">Community Food Bank (NGO)</option>
             </select>
           </div>
         </div>
@@ -111,6 +122,22 @@ export const Navigation: React.FC<NavigationProps> = ({
         >
           <Layers size={18} />
           <span>POS Integrations</span>
+        </div>
+
+        <div
+          className={`nav-item ${activeTab === 'surplus' ? 'active' : ''}`}
+          onClick={() => setActiveTab('surplus')}
+        >
+          <HeartHandshake size={18} />
+          <span>Surplus & NGOs</span>
+        </div>
+
+        <div
+          className={`nav-item ${activeTab === 'analytics' ? 'active' : ''}`}
+          onClick={() => setActiveTab('analytics')}
+        >
+          <BarChart3 size={18} />
+          <span>Sustainability & Impact</span>
         </div>
       </nav>
 

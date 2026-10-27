@@ -42,6 +42,15 @@ from backend.app.schemas.expiry import (
     TenantAlertConfigSchema,
     TenantAlertConfigUpdate,
 )
+from backend.app.schemas.analytics import (
+    BusinessDashboardSummary,
+    CategoryImpact,
+    EnvironmentalEquivalencies,
+    NgoDashboardSummary,
+    SustainabilityMetrics,
+    TimeSeriesPoint,
+    TimeSeriesResponse,
+)
 
 __all__ = [
     "ErrorBody",
@@ -76,4 +85,11 @@ __all__ = [
     "PosWebhookLineItem",
     "PosWebhookPayload",
     "PosWebhookResponse",
+    "BusinessDashboardSummary",
+    "CategoryImpact",
+    "EnvironmentalEquivalencies",
+    "NgoDashboardSummary",
+    "SustainabilityMetrics",
+    "TimeSeriesPoint",
+    "TimeSeriesResponse",
 ]

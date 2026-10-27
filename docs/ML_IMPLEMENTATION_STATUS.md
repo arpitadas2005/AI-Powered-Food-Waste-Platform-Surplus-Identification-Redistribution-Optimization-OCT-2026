@@ -1,28 +1,93 @@
-# Milestone 2 — Machine Learning Implementation Status
+# Food Waste Management Platform — Implementation Status
 
 **Project**: AI-Powered Food Waste Management Platform for Surplus Identification and Redistribution Optimization  
-**Milestone**: 2 — Machine Learning Demand Forecasting & Food Waste Prediction  
-**Phase**: Phase 4 — Waste Risk Scoring, Smart Reorder Recommendations & Forecast API Integration  
-**Date**: October 25, 2026  
-**Status**: **PHASE 4 COMPLETE (Verified & Ready for Milestone Acceptance)**  
+**Milestone**: 3 — Surplus Identification, NGO Matching & Redistribution Optimization  
+**Phase**: Phase 4 — Full-System Integration Testing, Security Validation & Final Demo Readiness  
+**Date**: October 27, 2026  
+**Status**: **MILESTONE 3 PHASE 4 COMPLETE (168/168 Tests Passing, Production Ready & Demo Certified)**  
 
 ---
 
-## 1. Milestone 2 Overview & Roadmap
-
-Milestone 2 advances the platform from inventory tracking and expiry monitoring to proactive demand forecasting and predictive surplus prevention.
+## 1. Milestone Roadmap & Implementation History
 
 | Phase | Description | Status | Verification Summary |
 | :---: | :--- | :---: | :--- |
-| **Phase 1** | **Dataset Audit, Raw Data Profiling & ML Pipeline Design** | **COMPLETE** | Audited repository, generated 365-day benchmark dataset, built reproducible profiling pipeline, designed zero-leakage feature engineering, created baseline specs and risk formulas. All 8 tests passing. |
-| **Phase 2** | **Data Cleaning, Preprocessing & Feature Engineering** | **COMPLETE** | Ingested and cleaned raw transactional and daily datasets, constructed unbroken calendar grids, engineered 27 leakage-free predictive features, generated multi-horizon targets, partitioned chronologically (70/15/15), isolated scalers on Train split, and verified zero lookahead leakage. 12 automated tests passing. |
-| **Phase 3** | **Forecasting Model Development, Training & Evaluation** | **COMPLETE** | Implemented Baselines (Naive, Seasonal Naive, MA, Mean) and candidate ML models (Ridge, GBDT, Random Forest). Validated on 15% validation split: Random Forest champion for 1-day ahead (12.94% Val WAPE, 15.05% Test WAPE, 40% error reduction over baseline), Ridge champion for 7-day cumulative demand (5.53% Val WAPE, 7.03% Test WAPE). Authored 11 automated tests (31/31 ML tests passing, 98/98 total). |
-| **Phase 4** | **Waste Risk Scoring, Smart Reorder Recommendations & Forecast API Integration** | **COMPLETE** | Built modular Waste-Risk Scoring Engine with 4 explainable risk tiers (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`); built Smart Replenishment Engine with safety stock ($Z=1.65$) and expiry-risk suppression guard; created persistence models and Alembic migration; exposed FastAPI REST endpoints under `/forecasts` and `/waste-risk` with strict multi-tenant isolation; built `BatchPredictionJob` and CLI runner. 12 new automated tests passing (43/43 ML tests passing, 121/121 total project tests passing, 100%). |
-| **Phase 5** | **Surplus Marketplace & Food Bank Donation Dispatcher** | *NEXT MILESTONE* | Milestone 3 scope: Marketplace listings, NGO matching, and redistribution logistics. |
+| **Milestone 3 Phase 4** | **Full-System Integration Testing, Security Validation & Final Demo Readiness** | **COMPLETE** | Executed end-to-end integration workflows (A-E), multi-tenant IDOR/BOLA security tests, role-based access control, SQL injection protection, spreadsheet formula injection defense (CWE-1236), race condition concurrency handling, transfer idempotency, and live latency benchmarking. Authored 14 new automated tests (**168/168 total project tests passing, 100%**). |
+| **Milestone 3 Phase 3** | **Business/NGO Dashboards & Sustainability Impact Analytics** | **COMPLETE** | Built executive Business Dashboard, NGO Recipient Portal, and verified Sustainability Analytics Engine (EPA WARM v15: 2.5 kg CO2e/kg, Feeding America: 0.42 kg/meal). Implemented pure-SVG trend charts, category distributions, and CWE-1236-protected CSV export. 8 automated tests passing (**154/154 total tests passing, 100%**). |
+| **Milestone 3 Phase 2** | **Claim Management, Pickup Scheduling & Notifications** | **COMPLETE** | Built database-backed Pickup Scheduling Engine (`PickupSchedule`) with food safety expiry validation, rescheduling with reasons, and missed pickup detection; built In-App Notification System (`SurplusNotification`) with unread tracking; integrated full claim lifecycle milestones (`SCHEDULED` $\to$ `READY_FOR_COLLECTION` $\to$ `COLLECTED` $\to$ `COMPLETED`); 11 automated tests passing (**146/146 total tests passing, 100%**). |
+| **Milestone 3 Phase 1** | **Surplus Food Listings & Explainable NGO Matching Engine** | **COMPLETE** | Implemented Surplus Listing Engine (`SurplusListing`) with anti-oversubscription checks and food-safety shelf-life gates; built explainable multi-factor NGO Matching Engine (`matching_service.py`) with cold-chain safety gate, category matching, Haversine distance, and verification bonus; built atomic Claim and Reservation workflow; integrated physical donation pickup with immutable stock deduction (`DONATION_DISPATCH`); 14 automated tests passing (**135/135 total tests passing, 100%**). |
+| **Milestone 2 Phase 4** | **Waste Risk Scoring, Smart Reorder Recommendations & Forecast API Integration** | **COMPLETE** | Built modular Waste-Risk Scoring Engine with 4 explainable risk tiers (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`); built Smart Replenishment Engine with safety stock ($Z=1.65$) and expiry-risk suppression guard; created persistence models and exposed REST endpoints with strict multi-tenant isolation. 12 automated tests passing (**121/121 total tests passing, 100%**). |
+| **Milestone 2 Phase 3** | **Forecasting Model Development, Training & Evaluation** | **COMPLETE** | Implemented Baselines and candidate ML models (Ridge, GBDT, Random Forest). Validated Random Forest champion for 1-day ahead (15.05% Test WAPE, 40% error reduction over baseline), Ridge champion for 7-day cumulative demand (7.03% Test WAPE). 11 automated tests passing (**98/98 total tests passing, 100%**). |
+| **Milestone 2 Phase 2** | **Data Cleaning, Preprocessing & Feature Engineering** | **COMPLETE** | Ingested and cleaned raw transactional and daily datasets, engineered 27 leakage-free predictive features, generated multi-horizon targets, partitioned chronologically (70/15/15), isolated scalers on Train split, and verified zero lookahead leakage. 12 automated tests passing. |
+| **Milestone 2 Phase 1** | **Dataset Audit, Raw Data Profiling & ML Pipeline Design** | **COMPLETE** | Audited repository, generated 365-day benchmark dataset, built reproducible profiling pipeline, designed zero-leakage feature engineering, created baseline specs and risk formulas. All 8 tests passing. |
 
 ---
 
-## 2. Phase 4 Verification Matrix
+## 2. Milestone 3 Phase 4 Verification Matrix
+
+| Requirement | Description | Status | Evidence / Artifacts |
+| :--- | :--- | :---: | :--- |
+| **M3-P4-REQ-1** | End-to-End User Journey Integration (Workflows A–E) | **PASS** | Validated all 5 continuous lifecycle workflows across Inventory, Expiry, AI Forecasting, Waste Risk, Surplus Publishing, NGO Matching, Claim Approval, Pickup Logistics, Physical Stock Deduction, and Sustainability Analytics in [`backend/tests/test_full_system_e2e_integration.py`](file:///D:/Waste%20management/backend/tests/test_full_system_e2e_integration.py). Documented in [`docs/INTEGRATION_TEST_REPORT.md`](file:///D:/Waste%20management/docs/INTEGRATION_TEST_REPORT.md). |
+| **M3-P4-REQ-2** | Multi-Tenant BOLA/IDOR Security Isolation | **PASS** | Validated strict horizontal data isolation across donor tenants and NGO recipients in [`backend/tests/test_security_and_tenant_isolation.py`](file:///D:/Waste%20management/backend/tests/test_security_and_tenant_isolation.py). Cross-tenant queries, updates, cancellations, and claims return `404 Not Found` without information leakage. Documented in [`docs/SECURITY_VALIDATION_REPORT.md`](file:///D:/Waste%20management/docs/SECURITY_VALIDATION_REPORT.md). |
+| **M3-P4-REQ-3** | Role-Based Access Control (RBAC) Enforcement | **PASS** | Validated role boundary enforcement across `BUSINESS_OWNER`, `STORE_MANAGER`, `RECIPIENT_NGO`, and unauthenticated users. Unauthorized operations return `401 Unauthorized` or `403 Forbidden`. |
+| **M3-P4-REQ-4** | SQL & Formula Injection (CWE-1236) Defenses | **PASS** | Verified parameterized ORM queries immune to SQL injection payloads (`' OR '1'='1`). Verified CSV export sanitizes formulas (`=cmd|'`, `+`, `-`, `@`) by prepending single quotes to prevent client execution. |
+| **M3-P4-REQ-5** | Concurrency Defense & Race Condition Handling | **PASS** | Validated concurrent surplus claims in [`backend/tests/test_concurrency_and_database_integrity.py`](file:///D:/Waste%20management/backend/tests/test_concurrency_and_database_integrity.py). Out-of-stock and partial reservation requests are atomically rejected with zero over-subscription. |
+| **M3-P4-REQ-6** | Operation Idempotency & Stock Integrity | **PASS** | Verified that repeated calls to complete transfer on `COMPLETED` claims raise `400 Bad Request` and guarantee zero duplicate deductions from the inventory ledger. |
+| **M3-P4-REQ-7** | Database Foreign Key Cascades & Cleanup | **PASS** | Verified database cascade deletion behavior: deleting test tenants cleanly purges dependent records while maintaining referential integrity across surplus listings, claims, schedules, and notifications. |
+| **M3-P4-REQ-8** | ML Pipeline Integrity & Perturbation Testing | **PASS** | Verified chronological dataset partitioning, feature leakage immunity via `shift(1)`, and model artifact persistence. Champion models achieve 15.05% Test WAPE (1-day) and 7.03% Test WAPE (7-day). Documented in [`docs/ML_VALIDATION_REPORT.md`](file:///D:/Waste%20management/docs/ML_VALIDATION_REPORT.md). |
+| **M3-P4-REQ-9** | Live Performance & Latency Benchmarks | **PASS** | Measured live API latency via [`scripts/measure_performance.py`](file:///D:/Waste%20management/scripts/measure_performance.py): Liveness 4.19 ms, Database Ping 5.35 ms, Inventory 5.94 ms, ML Inference 0.03 ms, Analytics 5.65 ms. All operations exceed production SLAs ($< 200\text{ ms}$). |
+| **M3-P4-REQ-10** | Final Demo Readiness & Technical Documentation | **PASS** | Authored [`docs/DEMO_SETUP_GUIDE.md`](file:///D:/Waste%20management/docs/DEMO_SETUP_GUIDE.md) and [`docs/KNOWN_ISSUES.md`](file:///D:/Waste%20management/docs/KNOWN_ISSUES.md). Verified production frontend build (`npm run build` in 5.19s) and automated test suite (**168/168 tests passing, 100%**). |
+
+---
+
+## 3. Milestone 3 Phase 3 Verification Matrix
+
+| Requirement | Description | Status | Evidence / Artifacts |
+| :--- | :--- | :--- | :--- |
+| **M3-P3-REQ-1** | Business Dashboard Analytics API | **PASS** | Implemented `get_business_dashboard_summary` in [`backend/app/services/analytics_service.py`](file:///D:/Waste%20management/backend/app/services/analytics_service.py) and exposed `GET /api/v1/analytics/business/summary`. Returns stock count, valuation, expiring soon lots, ML high-risk count, active surplus, pending claims, upcoming pickups, and completed transfers. Documented in [`docs/BUSINESS_DASHBOARD.md`](file:///D:/Waste%20management/docs/BUSINESS_DASHBOARD.md). |
+| **M3-P3-REQ-2** | NGO Recipient Portal Analytics API | **PASS** | Implemented `get_ngo_dashboard_summary` and exposed `GET /api/v1/analytics/ngo/summary`. Integrates NGO profile verification, accepted categories, cold-chain storage facilities, eligible surplus count, pending claims, accepted ready claims, scheduled pickups, food mass received (kg), and meals served. Documented in [`docs/NGO_DASHBOARD.md`](file:///D:/Waste%20management/docs/NGO_DASHBOARD.md). |
+| **M3-P3-REQ-3** | Verified Sustainability Impact Engine | **PASS** | Implemented `get_sustainability_metrics` and exposed `GET /api/v1/analytics/sustainability`. Strictly enforces status gate (only `COMPLETED` claims contribute). Applies EPA WARM v15 ($2.5\text{ kg } CO_2e/\text{kg}$), Feeding America ($0.42\text{ kg/meal}$), tree equivalents ($21.77\text{ kg } CO_2/\text{tree}$), and vehicle miles ($0.393\text{ kg } CO_2e/\text{mile}$). Documented in [`docs/SUSTAINABILITY_ANALYTICS.md`](file:///D:/Waste%20management/docs/SUSTAINABILITY_ANALYTICS.md). |
+| **M3-P3-REQ-4** | Time-Series Trends Engine | **PASS** | Implemented `get_redistribution_time_series` and exposed `GET /api/v1/analytics/time-series`. Aggregates continuous daily/monthly buckets across rescued kg, claims count, avoided emissions, meals served, and financial value. |
+| **M3-P3-REQ-5** | CSV Export & Formula Injection Defense | **PASS** | Implemented `generate_redistribution_csv` and exposed `GET /api/v1/analytics/export/csv`. Sanitizes every cell via `sanitize_csv_cell` (prepends `'` to strings starting with `=`, `+`, `-`, `@`, `\t`, `\r` protecting against CWE-1236). |
+| **M3-P3-REQ-6** | REST API Contract & Role Security | **PASS** | Documented all 5 endpoints in [`docs/ANALYTICS_API_CONTRACT.md`](file:///D:/Waste%20management/docs/ANALYTICS_API_CONTRACT.md). Enforces strict multi-tenant boundaries and role protections (NGO role receives 403 on business summary). |
+| **M3-P3-REQ-7** | Responsive Frontend UI Integration | **PASS** | Enhanced [`frontend/src/components/DashboardView.tsx`](file:///D:/Waste%20management/frontend/src/components/DashboardView.tsx) with Business, NGO, and Sustainability tabs, date range filters (7d, 30d, 90d, All), pure-SVG time series trend line/bar charts, category distribution progress bars, and 1-click browser CSV export download. Frontend production build passed cleanly (`vite build` in 3.88s). |
+| **M3-P3-REQ-8** | Automated Testing & Zero Regression | **PASS** | Authored 8 new comprehensive unit and integration tests in [`backend/tests/test_analytics_and_dashboards.py`](file:///D:/Waste%20management/backend/tests/test_analytics_and_dashboards.py). **154 / 154 total project tests passing (100%)**. |
+
+---
+
+## 3. Milestone 3 Phase 3 Verification Matrix
+
+| Requirement | Description | Status | Evidence / Artifacts |
+| :--- | :--- | :--- | :--- |
+| **M3-P3-REQ-1** | Business Dashboard Analytics API | **PASS** | Implemented `get_business_dashboard_summary` in [`backend/app/services/analytics_service.py`](file:///D:/Waste%20management/backend/app/services/analytics_service.py) and exposed `GET /api/v1/analytics/business/summary`. Returns stock count, valuation, expiring soon lots, ML high-risk count, active surplus, pending claims, upcoming pickups, and completed transfers. Documented in [`docs/BUSINESS_DASHBOARD.md`](file:///D:/Waste%20management/docs/BUSINESS_DASHBOARD.md). |
+| **M3-P3-REQ-2** | NGO Recipient Portal Analytics API | **PASS** | Implemented `get_ngo_dashboard_summary` and exposed `GET /api/v1/analytics/ngo/summary`. Integrates NGO profile verification, accepted categories, cold-chain storage facilities, eligible surplus count, pending claims, accepted ready claims, scheduled pickups, food mass received (kg), and meals served. Documented in [`docs/NGO_DASHBOARD.md`](file:///D:/Waste%20management/docs/NGO_DASHBOARD.md). |
+| **M3-P3-REQ-3** | Verified Sustainability Impact Engine | **PASS** | Implemented `get_sustainability_metrics` and exposed `GET /api/v1/analytics/sustainability`. Strictly enforces status gate (only `COMPLETED` claims contribute). Applies EPA WARM v15 ($2.5\text{ kg } CO_2e/\text{kg}$), Feeding America ($0.42\text{ kg/meal}$), tree equivalents ($21.77\text{ kg } CO_2/\text{tree}$), and vehicle miles ($0.393\text{ kg } CO_2e/\text{mile}$). Documented in [`docs/SUSTAINABILITY_ANALYTICS.md`](file:///D:/Waste%20management/docs/SUSTAINABILITY_ANALYTICS.md). |
+| **M3-P3-REQ-4** | Time-Series Trends Engine | **PASS** | Implemented `get_redistribution_time_series` and exposed `GET /api/v1/analytics/time-series`. Aggregates continuous daily/monthly buckets across rescued kg, claims count, avoided emissions, meals served, and financial value. |
+| **M3-P3-REQ-5** | CSV Export & Formula Injection Defense | **PASS** | Implemented `generate_redistribution_csv` and exposed `GET /api/v1/analytics/export/csv`. Sanitizes every cell via `sanitize_csv_cell` (prepends `'` to strings starting with `=`, `+`, `-`, `@`, `\t`, `\r` protecting against CWE-1236). |
+| **M3-P3-REQ-6** | REST API Contract & Role Security | **PASS** | Documented all 5 endpoints in [`docs/ANALYTICS_API_CONTRACT.md`](file:///D:/Waste%20management/docs/ANALYTICS_API_CONTRACT.md). Enforces strict multi-tenant boundaries and role protections (NGO role receives 403 on business summary). |
+| **M3-P3-REQ-7** | Responsive Frontend UI Integration | **PASS** | Enhanced [`frontend/src/components/DashboardView.tsx`](file:///D:/Waste%20management/frontend/src/components/DashboardView.tsx) with Business, NGO, and Sustainability tabs, date range filters (7d, 30d, 90d, All), pure-SVG time series trend line/bar charts, category distribution progress bars, and 1-click browser CSV export download. Frontend production build passed cleanly (`vite build` in 3.88s). |
+| **M3-P3-REQ-8** | Automated Testing & Zero Regression | **PASS** | Authored 8 new comprehensive unit and integration tests in [`backend/tests/test_analytics_and_dashboards.py`](file:///D:/Waste%20management/backend/tests/test_analytics_and_dashboards.py). **154 / 154 total project tests passing (100%)**. |
+
+---
+
+## 4. Milestone 3 Phase 2 Verification Matrix
+
+| Requirement | Description | Status | Evidence / Artifacts |
+| :--- | :--- | :---: | :--- |
+| **M3-P2-REQ-1** | Database Models & Migrations | **PASS** | Created `PickupSchedule` and `PickupScheduleStatus` in [`backend/app/models/surplus.py`](file:///D:/Waste%20management/backend/app/models/surplus.py). Applied Alembic migration [`d7ba25360bd9_create_pickup_schedules_table.py`](file:///D:/Waste%20management/backend/migrations/versions/d7ba25360bd9_create_pickup_schedules_table.py). Foreign keys, unique constraints, and composite indexes verified. |
+| **M3-P2-REQ-2** | Pickup Window Validation & Food Safety Gate | **PASS** | Implemented `validate_pickup_window` in [`backend/app/services/surplus_service.py`](file:///D:/Waste%20management/backend/app/services/surplus_service.py). Enforces start < end, rejects past windows, and strictly blocks scheduling past item expiration date (`pickup_end_time <= listing.expiry_date`). |
+| **M3-P2-REQ-3** | Rescheduling Engine with Audit Rationale | **PASS** | Implemented `reschedule_pickup`. Enforces mandatory `rescheduled_reason`, increments `rescheduled_count`, updates operational window, dispatches counterpart notification, and records `SURPLUS_PICKUP_RESCHEDULE` audit trail. |
+| **M3-P2-REQ-4** | Milestone Progression & Physical Handover | **PASS** | Implemented `mark_pickup_ready` (`READY_FOR_COLLECTION`), `confirm_pickup_collection` (`COLLECTED`), and `complete_surplus_transfer` (`COMPLETED`). Atomically executes physical stock deduction via `DONATION_DISPATCH` with idempotency guard. |
+| **M3-P2-REQ-5** | Missed Pickup Detection & Alerts | **PASS** | Implemented `mark_pickup_missed`. Donor flags volunteer no-show, schedule transitions to `MISSED`, and alerts NGO coordinator to reschedule. |
+| **M3-P2-REQ-6** | Cascade Cancellation Engine | **PASS** | Cancelling a claim or donor listing automatically cascades cancellation to active pickup schedules with reasons preserved. |
+| **M3-P2-REQ-7** | In-App Notifications & Bulk Operations | **PASS** | Implemented `SurplusNotification` system covering all match, claim, scheduling, milestone, and dispatch events. Added `mark_all_notifications_read` for bulk acknowledgement. |
+| **M3-P2-REQ-8** | REST API Endpoints & Role Authorization | **PASS** | Implemented 8 new endpoints under `/api/v1/surplus/*`. Enforces role-based permissions (`BUSINESS_OWNER`, `STORE_MANAGER`, `RECIPIENT_NGO`) and cross-tenant boundaries. Fully documented in [`docs/CLAIM_PICKUP_API_CONTRACT.md`](file:///D:/Waste%20management/docs/CLAIM_PICKUP_API_CONTRACT.md). |
+| **M3-P2-REQ-9** | Frontend React Logistics Integration | **PASS** | Implemented interactive modals for pickup scheduling and rescheduling, real-time milestone progress bar, status badges, donor review triggers, and notification center in [`frontend/src/components/SurplusView.tsx`](file:///D:/Waste%20management/frontend/src/components/SurplusView.tsx). Frontend production build passed with zero errors. |
+| **M3-P2-REQ-10** | Automated Testing & Regression Suite | **PASS** | Authored 11 comprehensive unit/integration tests in [`backend/tests/test_pickup_scheduling_and_notifications.py`](file:///D:/Waste%20management/backend/tests/test_pickup_scheduling_and_notifications.py). **146 / 146 total project tests passing (100%)**. |
+
+---
+
+## 5. Milestone 2 Phase 4 Verification Matrix
 
 | Requirement | Description | Status | Evidence / Artifacts |
 | :--- | :--- | :---: | :--- |
@@ -37,7 +102,7 @@ Milestone 2 advances the platform from inventory tracking and expiry monitoring 
 
 ---
 
-## 3. Phase 3 Verification Matrix
+## 6. Milestone 2 Phase 3 Verification Matrix
 
 | Requirement | Description | Status | Evidence / Artifacts |
 | :--- | :--- | :---: | :--- |
@@ -52,7 +117,7 @@ Milestone 2 advances the platform from inventory tracking and expiry monitoring 
 
 ---
 
-## 4. Phase 2 Verification Matrix
+## 7. Milestone 2 Phase 2 Verification Matrix
 
 | Requirement | Description | Status | Evidence / Artifacts |
 | :--- | :--- | :---: | :--- |
@@ -67,7 +132,7 @@ Milestone 2 advances the platform from inventory tracking and expiry monitoring 
 
 ---
 
-## 5. Phase 1 Verification Matrix
+## 8. Milestone 2 Phase 1 Verification Matrix
 
 | Requirement | Description | Status | Evidence / Artifacts |
 | :--- | :--- | :---: | :--- |

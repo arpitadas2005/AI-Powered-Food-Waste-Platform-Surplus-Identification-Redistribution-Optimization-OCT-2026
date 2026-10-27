@@ -8,6 +8,8 @@ from backend.app.api.v1.alerts import router as alerts_router
 from backend.app.api.v1.pos import router as pos_router
 from backend.app.api.v1.forecasts import router as forecasts_router
 from backend.app.api.v1.waste_risk import router as waste_risk_router
+from backend.app.api.v1.surplus import router as surplus_router
+from backend.app.api.v1.analytics import router as analytics_router
 
 api_router = APIRouter()
 # Register alerts_router before inventory_router so static paths (/inventory/expiring)
@@ -19,3 +21,5 @@ api_router.include_router(import_export_router)
 api_router.include_router(pos_router)
 api_router.include_router(forecasts_router)
 api_router.include_router(waste_risk_router)
+api_router.include_router(surplus_router)
+api_router.include_router(analytics_router)
